@@ -27,7 +27,7 @@ const FuncionarioAdd = memo(() => {
           <Card>
             <Card.Header className="d-flex justify-content-between">
               <div className="header-title">
-                <h4 className="card-title">Novo Funciánario</h4>
+                <h4 className="card-title">Nova Escola</h4>
               </div>
             </Card.Header>
             <Card.Body>
@@ -92,33 +92,17 @@ const FuncionarioAdd = memo(() => {
                 </Form.Group>
 
                 <Form.Group className="form-group">
-                  <Form.Label>Cargo</Form.Label>
+                  <Form.Label>Categoria</Form.Label>
                   <select
                     name="type"
                     className="selectpicker form-control"
                     data-style="py-0"
                   >
-                    <option>Professor</option>
-                    <option>Estagiário</option>
-                    <option value="select" onClick={() => setProf(true)}>
-                      Coordenador
-                    </option>
+                    <option>Ensino Primario</option>
+                    <option>Ensino Secundário</option>
+                    <option>Ensino Médio</option>
                   </select>
                 </Form.Group>
-                {isProf ? (
-                  <Form.Group className="form-group">
-                    <Form.Label>Area de Formação</Form.Label>
-                    <select
-                      name="type"
-                      className="selectpicker form-control"
-                      data-style="py-0"
-                    >
-                      <option>Professor</option>
-                      <option>Estagiário</option>
-                      <option>Coordenador</option>
-                    </select>
-                  </Form.Group>
-                ) : null}
 
                 <Form.Group className="mb-0 form-group">
                   <Form.Label htmlFor="lurl">Linkedin Url:</Form.Label>
@@ -136,7 +120,7 @@ const FuncionarioAdd = memo(() => {
           <Card>
             <Card.Header className="d-flex justify-content-between">
               <div className="header-title">
-                <h4 className="card-title">Informações do novo usuário</h4>
+                <h4 className="card-title">Informações da nova escola</h4>
               </div>
             </Card.Header>
             <Card.Body>
@@ -152,11 +136,11 @@ const FuncionarioAdd = memo(() => {
                       />
                     </Form.Group>
                     <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="lname">Sobrenome:</Form.Label>
+                      <Form.Label htmlFor="lname">Localização:</Form.Label>
                       <Form.Control
                         type="text"
                         id="lname"
-                        placeholder="Sobrenome"
+                        placeholder="Luanda Vila Alice"
                       />
                     </Form.Group>
                     <Form.Group className="col-md-6 form-group">
@@ -175,17 +159,41 @@ const FuncionarioAdd = memo(() => {
                         placeholder="Número de telefone"
                       />
                     </Form.Group>
-                    <Form.Group className="form-group">
-                      <Form.Label>Sexo</Form.Label>
-                      <select
-                        name="type"
-                        className="selectpicker form-control"
-                        data-style="py-0"
-                      >
-                        <option>Mascolino</option>
-                        <option>Femenino</option>
-                        <option>Outros</option>
-                      </select>
+                    <Form.Group className="col-md-6 form-group">
+                      <Form.Label htmlFor="add2">NIF</Form.Label>
+                      <Form.Control
+                        type="number"
+                        id="add2"
+                        placeholder="Número de telefone"
+                      />
+                    </Form.Group>
+                  </div>
+                  <hr />
+                  <h5 className="mb-3">Dados de acesso</h5>
+                  <div className="row">
+                    <Form.Group className="col-md-12 form-group">
+                      <Form.Label htmlFor="uname">Name de Usuário:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        id="uname"
+                        placeholder="ipilmakarenco"
+                      />
+                    </Form.Group>
+                    <Form.Group className="col-md-6 form-group">
+                      <Form.Label htmlFor="pass">Senha:</Form.Label>
+                      <Form.Control
+                        type="password"
+                        id="pass"
+                        placeholder="Palavra Chave"
+                      />
+                    </Form.Group>
+                    <Form.Group className="col-md-6 form-group">
+                      <Form.Label htmlFor="rpass">Repita a Senha:</Form.Label>
+                      <Form.Control
+                        type="password"
+                        id="rpass"
+                        placeholder="Repita a Senha "
+                      />
                     </Form.Group>
                   </div>
 
