@@ -7,13 +7,13 @@ import { Row, Col, Image, Button, Table } from "react-bootstrap";
 import Card from "../../../components/bootstrap/card";
 
 //Img
-import img1 from "/src/assets/images/avatars/22.jpg";
-import img2 from "/src/assets/images/avatars/23.jpg";
+import img1 from "/src/assets/images/avatars/comercial.jpg";
+import img2 from "/src/assets/images/avatars/imel.jpg";
 import img3 from "/src/assets/images/avatars/03.png";
-import img4 from "/src/assets/images/avatars/04.png";
+import img4 from "/src/assets/images/avatars/itel.jpg";
 import img5 from "/src/assets/images/avatars/05.png";
 import img6 from "/src/assets/images/avatars/06.png";
-import img7 from "/src/assets/images/avatars/21.jpg";
+import img7 from "/src/assets/images/avatars/maka.png";
 import img8 from "/src/assets/images/avatars/08.png";
 import img9 from "/src/assets/images/avatars/09.png";
 
@@ -368,57 +368,57 @@ const FuncionarioList = memo(() => {
 
   const table1 = [
     {
-      name: "Ernesto Cabingano Salias",
-      desc: "Masculino",
+      name: "Istituto Politécnico Industrial de Luanda",
+      desc: "Ensino Médio",
       img: img7,
       contact: "930964062",
-      emailid: "ercabsalias@gmail.com",
-      purchases: "Masculino",
+      emailid: "ipilmakarenco@gmail.com",
+
       statusColor: "warning",
       bgColor: "warning",
-      status: "Professor",
+      status: "5401144440",
       actionadd: add,
       actionedit: edit,
       actionremove: remove,
     },
     {
-      name: "Ernesto Cabingano Salias",
-      desc: "Masculino",
+      name: "Instituto Médio de Economia de Luanda",
+      desc: "Ensino Médio",
       img: img2,
       contact: "930964062",
-      emailid: "ercabsalias@gmail.com",
-      purchases: "Masculino",
+      emailid: "imelescola@gmail.com",
+
       statusColor: "warning",
       bgColor: "warning",
-      status: "Professor",
+      status: "5401144440",
       actionadd: add,
       actionedit: edit,
       actionremove: remove,
     },
     {
-      name: "Joana João",
-      desc: "Femenino",
+      name: "Instituto De Telecomunicações",
+      desc: "Ensino Médio",
       img: img4,
       contact: "930964062",
-      emailid: "marquek@mail.com",
-      purchases: "Femenino",
+      emailid: "itelmarquek@mail.com",
+
       statusColor: "success",
       bgColor: "success",
-      status: "Professor",
+      status: "5401144440",
       actionadd: add,
       actionedit: edit,
       actionremove: remove,
     },
     {
-      name: "Neidy Mateus",
-      desc: "Femenino",
+      name: "Instituto Médio Comercial de Luanda",
+      desc: "Ensino Médio",
       img: img1,
       contact: "930964062",
-      emailid: "marquek@mail.com",
-      purchases: "Femenino",
+      emailid: "comercialmarquek@mail.com",
+
       statusColor: "success",
       bgColor: "success",
-      status: "Professor",
+      status: "5401144440",
       actionadd: add,
       actionedit: edit,
       actionremove: remove,
@@ -437,8 +437,8 @@ const FuncionarioList = memo(() => {
                       <th scope="col">Nome</th>
                       <th scope="col">Contacto</th>
                       <th scope="col">Email</th>
-                      <th scope="col">Sexo</th>
-                      <th scope="col">Cargo</th>
+
+                      <th scope="col">NIF</th>
                       <th scope="col">Acção</th>
                     </tr>
                   </thead>
@@ -462,7 +462,6 @@ const FuncionarioList = memo(() => {
                           <td className="text-dark">{item.contact}</td>
                           <td className="text-dark">{item.emailid}</td>
 
-                          <td className="text-dark">{item.purchases}</td>
                           <td className="text-dark">{item.status}</td>
                           <td>
                             <div className="d-flex justify-content-evenly">
