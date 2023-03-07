@@ -3,6 +3,43 @@ import { memo, lazy } from "react";
 //router
 import { Routes, Route } from "react-router-dom";
 
+const CursoAdd = lazy(() => import("../views/dashboard/curso/curso-add"));
+const CursoList = lazy(() => import("../views/dashboard/curso/curso-list"));
+
+const ConfPerfil = lazy(() =>
+  import("../views/dashboard/perfil-saida/perfil-conf")
+);
+const VerPerfil = lazy(() =>
+  import("../views/dashboard/perfil-saida/perfil-ver")
+);
+
+///Formação
+const FormacaoAdd = lazy(() =>
+  import("../views/dashboard/formacao/formacao-add")
+);
+const FormacaoList = lazy(() =>
+  import("../views/dashboard/formacao/formacao-list")
+);
+
+///Formação
+const InscritosList = lazy(() =>
+  import("../views/dashboard/inscritos/inscritos-list")
+);
+const InscritosAceitesList = lazy(() =>
+  import("../views/dashboard/inscritos/aceites-list")
+);
+const InscritosRejeitoList = lazy(() =>
+  import("../views/dashboard/inscritos/rejeitado-list")
+);
+
+///Formação
+const FuncionarioAdd = lazy(() =>
+  import("../views/dashboard/funcionarios/funcionario-add")
+);
+const FuncionarioList = lazy(() =>
+  import("../views/dashboard/funcionarios/funcionario-list")
+);
+
 //layoutpages
 import Default from "../layouts/dashboard/default";
 import Horizontal from "../layouts/dashboard/horizontal";
@@ -30,6 +67,7 @@ const Index = lazy(() => import("../views/dashboard/index"));
 // User
 const UserProfile = lazy(() => import("../views/dashboard/app/user-profile"));
 const UserAdd = lazy(() => import("../views/dashboard/app/user-add"));
+
 const UserList = lazy(() => import("../views/dashboard/app/user-list"));
 // const userProfileEdit = lazy(() => import('../views/dashboard/app/user-privacy-setting'))
 
@@ -188,8 +226,42 @@ const IndexRouters = memo(() => {
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/crypto" element={<Crypto />} />
 
+        {/* Curso */}
+        <Route path="/curso/curso-add" element={<CursoAdd />} />
+        <Route path="/curso/curso-list" element={<CursoList />} />
+
+        {/* Perfil Saída */}
+        <Route path="/perfil-saida/perfil-conf" element={<ConfPerfil />} />
+        <Route path="/perfil-saida/perfil-ver" element={<VerPerfil />} />
+
+        {/* Formação */}
+        <Route path="/formacao/formacao-add" element={<FormacaoAdd />} />
+        <Route path="/formacao/formacao-list" element={<FormacaoList />} />
+
+        {/* Inscritos */}
+        <Route path="/inscritos/inscritos-list" element={<InscritosList />} />
+        <Route
+          path="/inscritos/aceites-list"
+          element={<InscritosAceitesList />}
+        />
+        <Route
+          path="/inscritos/rejeitados-list"
+          element={<InscritosRejeitoList />}
+        />
+
+        {/* Formação */}
+        <Route
+          path="/funcionario/funcionario-add"
+          element={<FuncionarioAdd />}
+        />
+        <Route
+          path="/funcionario/funcionario-list"
+          element={<FuncionarioList />}
+        />
+
         {/* user */}
         <Route path="/app/user-profile" element={<UserProfile />} />
+
         <Route path="/app/user-add" element={<UserAdd />} />
         <Route path="/app/user-list" element={<UserList />} />
         <Route path="/app/user-privacy-setting" element={<userProfileEdit />} />

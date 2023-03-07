@@ -212,6 +212,9 @@ const DefaultRouter = memo(() => {
       />
       <Route path="/extra/blank-page" exact element={<BlankPages />} />
 
+      {/* Curso */}
+      <Route path="/curso/curso-add" element={<CursoAdd />} />
+
       {/*ui-kit  */}
       <Route path="/uikit/avatars" exact element={<Avatars />} />
       <Route path="/uikit/alerts" exact element={<Alerts />} />

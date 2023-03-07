@@ -534,10 +534,10 @@ const Header = memo((props) => {
                     loading="lazy"
                   />
                   <div className="caption ms-3 d-none d-md-block ">
-                    <h6 className="mb-0 caption-title">Austin Robertson</h6>
-                    <p className="mb-0 caption-sub-title">
-                      Marketing Administrator
-                    </p>
+                    <h6 className="mb-0 caption-title">
+                      Insituto Politécnico Industrial
+                    </h6>
+                    <p className="mb-0 caption-sub-title">Ensino Médio</p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu

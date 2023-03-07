@@ -1,57 +1,52 @@
-import { useEffect, memo, Fragment, useContext, Suspense } from 'react'
-import { useLocation, Outlet } from 'react-router-dom'
+import { useEffect, memo, Fragment, useContext, Suspense } from "react";
+import { useLocation, Outlet } from "react-router-dom";
 
 //react-shepherd
-import { ShepherdTour, ShepherdTourContext } from 'react-shepherd'
+import { ShepherdTour, ShepherdTourContext } from "react-shepherd";
 
 // header
-import Header from '../../components/partials/headerstyle/header'
+import Header from "../../components/partials/headerstyle/header";
 
 //subheader
-import SubHeader from '../../components/partials/dashboard/headerstyle/sub-header'
+import SubHeader from "../../components/partials/dashboard/headerstyle/sub-header";
 
 //sidebar
-import Sidebar from '../../components/partials/dashboard/sidebarstyle/sidebar'
+import Sidebar from "../../components/partials/dashboard/sidebarstyle/sidebar";
 
 //footer
-import Footer from '../../components/partials/dashboard/footerstyle/footer'
+import Footer from "../../components/partials/dashboard/footerstyle/footer";
 
 //seetingoffCanvas
-import SettingOffCanvas from '../../components/setting/SettingOffCanvas'
+import SettingOffCanvas from "../../components/setting/SettingOffCanvas";
 
-import Loader from '../../components/Loader'
+import Loader from "../../components/Loader";
 
 // Import selectors & action from setting store
-import * as SettingSelector from '../../store/setting/selectors'
-
+import * as SettingSelector from "../../store/setting/selectors";
 
 // Redux Selector / Action
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 const Tour = () => {
   const tour = useContext(ShepherdTourContext);
-  const { pathname } = useLocation()
+  const { pathname } = useLocation();
   useEffect(() => {
-    if (pathname === '/' && sessionStorage.getItem('tour') !== 'true') {
+    if (pathname === "/" && sessionStorage.getItem("tour") !== "true") {
       tour?.start();
     }
   });
-  return (
-    <Fragment>
-    </Fragment>
-  );
+  return <Fragment></Fragment>;
 };
 
 const Default = memo((props) => {
   let location = useLocation();
-  const pageLayout = useSelector(SettingSelector.page_layout)
-  const appName = useSelector(SettingSelector.app_name)
-  useEffect(() => {
-  })
+  const pageLayout = useSelector(SettingSelector.page_layout);
+  const appName = useSelector(SettingSelector.app_name);
+  useEffect(() => {});
 
   const closeTour = () => {
-    sessionStorage.setItem('tour', 'true')
-  }
+    sessionStorage.setItem("tour", "true");
+  };
 
   // shepherd
   const newSteps = [
@@ -62,15 +57,17 @@ const Default = memo((props) => {
       buttons: [
         {
           type: "next",
-          text: "Next"
-        }
+          text: "Next",
+        },
       ],
       when: {
         show: () => {
-          document.querySelector('.shepherd-modal-overlay-container').classList.add('shepherd-modal-is-visible')
+          document
+            .querySelector(".shepherd-modal-overlay-container")
+            .classList.add("shepherd-modal-is-visible");
         },
-        cancel: () => closeTour()
-      }
+        cancel: () => closeTour(),
+      },
     },
     {
       title: "<h4>Profile Setting</h4>",
@@ -80,16 +77,16 @@ const Default = memo((props) => {
         {
           type: "back",
           classes: "shepherd-button-secondary",
-          text: "Back"
+          text: "Back",
         },
         {
           type: "next",
-          text: "Next"
-        }
+          text: "Next",
+        },
       ],
       when: {
-        cancel: () => closeTour()
-      }
+        cancel: () => closeTour(),
+      },
     },
     {
       title: "<h4>Live Customizer</h4>",
@@ -99,101 +96,112 @@ const Default = memo((props) => {
         {
           type: "back",
           classes: "shepherd-button-secondary",
-          text: "Back"
+          text: "Back",
         },
         {
           action() {
-            sessionStorage.setItem('tour', 'true')
+            sessionStorage.setItem("tour", "true");
             return this.next();
           },
-          text: "Done"
-        }
+          text: "Done",
+        },
       ],
       when: {
-        cancel: () => closeTour()
-      }
+        cancel: () => closeTour(),
+      },
     },
   ];
   const tourOptions = {
     defaultStepOptions: {
       cancelIcon: {
-        enabled: true
-      }
+        enabled: true,
+      },
     },
     when: {
-      cancel: function () {
-      }
-    }
+      cancel: function () {},
+    },
   };
-  var subHeader = '';
-  var commanclass = '';
+  var subHeader = "";
+  var commanclass = "";
   switch (location.pathname) {
-    case '/special-pages/calender':
-    case '/special-pages/billing':
-    case '/special-pages/billing-1':
-    case '/special-pages/billing-2':
-    case '/special-pages/kanban':
-    case '/special-pages/pricing':
-    case '/special-pages/timeline':
-    case '/app/user-profile':
-    case '/app/user-add':
-    case '/app/user-list':
-    case '/table/table-data':
-    case '/table/bootstrap-table':
-    case '/table/border-table':
-    case '/table/fancy-table':
-    case '/table/fixed-table':
-    case '/ui-elements/avatars':
-    case '/ui-elements/alerts':
-    case '/ui-elements/badges':
-    case '/ui-elements/breadcrumb':
-    case '/ui-elements/buttons':
-    case '/ui-elements/button-group':
-    case '/ui-elements/offcanvas':
-    case '/ui-elements/color':
-    case '/ui-elements/cards':
-    case '/ui-elements/carousel':
-    case '/ui-elements/grid':
-    case '/ui-elements/images':
-    case '/ui-elements/list-groups':
-    case '/ui-elements/modal':
-    case '/ui-elements/notifications':
-    case '/ui-elements/pagination':
-    case '/ui-elements/popovers':
-    case '/ui-elements/progressbars':
-    case '/ui-elements/typography':
-    case '/ui-elements/tabs':
-    case '/ui-elements/tooltips':
-    case '/ui-elements/embed-video':
-    case '/widget/widgetbasic':
-    case '/widget/widgetchart':
-    case '/widget/widgetcard':
-    case '/map/google':
-    case '/form/form-element':
-    case '/form/form-wizard':
-    case '/form/form-validation':
-    case '/icon/solid':
-    case '/icon/outline':
-    case '/icon/dual-tone':
-    case '/plugins/apexcharts':
-    case '/plugins/button-hover':
-    case '/plugins/choise-js':
-    case '/plugins/flatpickr':
-    case '/plugins/fslightbox':
-    case '/plugins/gallery-hover':
-    case '/plugins/image-copper':
-    case '/plugins/loader':
-    case '/plugins/rating':
-    case '/plugins/select2':
-    case '/plugins/sweet-alert':
-    case '/plugins/quill-editor':
-    case '/plugins/uppy':
-    case '/extra/blank-page':
-      subHeader = <SubHeader />
-      commanclass = 'iq-banner default'
+    case "/special-pages/calender":
+    case "/special-pages/billing":
+    case "/special-pages/billing-1":
+    case "/special-pages/billing-2":
+    case "/special-pages/kanban":
+    case "/special-pages/pricing":
+    case "/special-pages/timeline":
+    case "/app/user-profile":
+    case "/app/user-add":
+    case "/app/user-list":
+    case "/table/table-data":
+    case "/table/bootstrap-table":
+    case "/table/border-table":
+    case "/table/fancy-table":
+    case "/table/fixed-table":
+    case "/ui-elements/avatars":
+    case "/ui-elements/alerts":
+    case "/ui-elements/badges":
+    case "/ui-elements/breadcrumb":
+    case "/ui-elements/buttons":
+    case "/ui-elements/button-group":
+    case "/ui-elements/offcanvas":
+    case "/ui-elements/color":
+
+    case "/ui-elements/cards":
+    case "/ui-elements/carousel":
+    case "/ui-elements/grid":
+    case "/ui-elements/images":
+    case "/ui-elements/list-groups":
+    case "/ui-elements/modal":
+    case "/ui-elements/notifications":
+    case "/ui-elements/pagination":
+    case "/ui-elements/popovers":
+    case "/ui-elements/progressbars":
+    case "/ui-elements/typography":
+    case "/ui-elements/tabs":
+    case "/ui-elements/tooltips":
+    case "/ui-elements/embed-video":
+    case "/widget/widgetbasic":
+    case "/widget/widgetchart":
+    case "/widget/widgetcard":
+    case "/map/google":
+    case "/form/form-element":
+    case "/form/form-wizard":
+    case "/form/form-validation":
+    case "/icon/solid":
+    case "/icon/outline":
+    case "/icon/dual-tone":
+    case "/plugins/apexcharts":
+    case "/plugins/button-hover":
+    case "/plugins/choise-js":
+    case "/plugins/flatpickr":
+    case "/plugins/fslightbox":
+    case "/plugins/gallery-hover":
+    case "/plugins/image-copper":
+    case "/plugins/loader":
+    case "/plugins/rating":
+    case "/plugins/select2":
+    case "/plugins/sweet-alert":
+    case "/plugins/quill-editor":
+    case "/plugins/uppy":
+    case "/extra/blank-page":
+    case "/formacao/formacao-add":
+    case "/formacao/formacao-list":
+    case "/curso/curso-add":
+    case "/curso/curso-list":
+    case "/funcionario/funcionario-add":
+    case "/funcionario/funcionario-list":
+    case "/perfil-saida/perfil-conf":
+    case "/perfil-saida/perfil-ver":
+    case "/inscritos/inscritos-list":
+    case "/inscritos/aceites-list":
+    case "/inscritos/rejeitados-list":
+      subHeader = <SubHeader />;
+      commanclass = "iq-banner default";
       break;
     default:
-      break
+      break;
   }
 
   return (
@@ -217,9 +225,8 @@ const Default = memo((props) => {
         <SettingOffCanvas />
       </ShepherdTour>
     </Fragment>
-  )
-}
-)
+  );
+});
 
-Default.displayName = "Default"
-export default Default
+Default.displayName = "Default";
+export default Default;
