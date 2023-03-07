@@ -735,7 +735,7 @@ const VerticalNav = memo(() => {
                 </svg>
               </i>
             </OverlayTrigger>
-            <span className="item-name">Funcionários</span>
+            <span className="item-name">Escolas</span>
             <i className="right-icon">
               <svg
                 className="icon-18"
@@ -760,11 +760,9 @@ const VerticalNav = memo(() => {
               <Nav.Item as="li">
                 <Link
                   className={`${
-                    location.pathname === "/funcionario/funcionario-add"
-                      ? "active"
-                      : ""
+                    location.pathname === "/escolas/escola-add" ? "active" : ""
                   } nav-link`}
-                  to="/funcionario/funcionario-add"
+                  to="/escolas/escola-add"
                 >
                   <i className="icon">
                     <svg
@@ -790,17 +788,15 @@ const VerticalNav = memo(() => {
                   >
                     <i className="sidenav-mini-icon"> A </i>
                   </OverlayTrigger>
-                  <span className="item-name">Adicionar Funcionário</span>
+                  <span className="item-name">Adicionar Escola</span>
                 </Link>
               </Nav.Item>
               <Nav.Item as="li">
                 <Link
                   className={`${
-                    location.pathname === "/funcionario/funcionario-list"
-                      ? "active"
-                      : ""
+                    location.pathname === "/escolas/escola-list" ? "active" : ""
                   } nav-link`}
-                  to="/funcionario/funcionario-list"
+                  to="/escolas/escola-list"
                 >
                   <i className="icon">
                     <svg
@@ -826,7 +822,7 @@ const VerticalNav = memo(() => {
                   >
                     <i className="sidenav-mini-icon"> U </i>
                   </OverlayTrigger>
-                  <span className="item-name">Listar Funcionário</span>
+                  <span className="item-name">Listar Escola</span>
                 </Link>
               </Nav.Item>
             </ul>

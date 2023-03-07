@@ -33,12 +33,8 @@ const InscritosRejeitoList = lazy(() =>
 );
 
 ///Formação
-const FuncionarioAdd = lazy(() =>
-  import("../views/dashboard/funcionarios/funcionario-add")
-);
-const FuncionarioList = lazy(() =>
-  import("../views/dashboard/funcionarios/funcionario-list")
-);
+const EscolaAdd = lazy(() => import("../views/dashboard/escola/escola-add"));
+const EscolaList = lazy(() => import("../views/dashboard/escola/escola-list"));
 
 //layoutpages
 import Default from "../layouts/dashboard/default";
@@ -250,14 +246,8 @@ const IndexRouters = memo(() => {
         />
 
         {/* Formação */}
-        <Route
-          path="/funcionario/funcionario-add"
-          element={<FuncionarioAdd />}
-        />
-        <Route
-          path="/funcionario/funcionario-list"
-          element={<FuncionarioList />}
-        />
+        <Route path="/escolas/escola-add" element={<EscolaAdd />} />
+        <Route path="/escolas/escola-list" element={<EscolaList />} />
 
         {/* user */}
         <Route path="/app/user-profile" element={<UserProfile />} />
