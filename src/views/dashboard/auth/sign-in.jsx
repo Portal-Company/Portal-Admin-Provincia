@@ -26,7 +26,6 @@ import * as yup from "yup";
 import useSWR from "swr";
 import { useSelector } from "react-redux";
 import { api } from "../../../services";
-import { UserContext } from "../../../context";
 import { getUserInfo } from "./services";
 
 const SignIn = memo(() => {

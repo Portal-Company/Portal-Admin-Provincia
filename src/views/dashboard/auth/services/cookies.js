@@ -1,4 +1,3 @@
-
 import nookies from 'nookies';
 
 export const setCookie = (token) => {
