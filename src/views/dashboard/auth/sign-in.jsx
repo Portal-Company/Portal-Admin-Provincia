@@ -1,4 +1,5 @@
-import { memo, Fragment } from "react";
+import { memo, Fragment, useContext, useState } from "react";
+import { toast } from "react-toastify";
 
 //react-bootstrap
 import { Row, Col, Image, Form, Button, ListGroup } from "react-bootstrap";
@@ -17,15 +18,53 @@ import google from "/src/assets/images/brands/gm.svg";
 import instagram from "/src/assets/images/brands/im.svg";
 import linkedin from "/src/assets/images/brands/li.svg";
 import auth1 from "/src/assets/images/auth/01.png";
-
+import { setCookie } from "nookies";
 // Import selectors & action from setting store
 import * as SettingSelector from "../../../store/setting/selectors";
-
+import { useFormik } from "formik";
+import * as yup from "yup";
+import useSWR from "swr";
 import { useSelector } from "react-redux";
+import { api } from "../../../services";
+import { getUserInfo } from "./services";
 
 const SignIn = memo(() => {
   const appName = useSelector(SettingSelector.app_name);
+  const [isSubmiting, setIsSubmiting] = useState(false);
+
   let history = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      senha: "",
+    },
+    validationSchema: yup.object({
+      email: yup
+        .string()
+        .email("Email inválido")
+        .required("Este campo é obrigatório"),
+
+      senha: yup.string().required("Este campo é obrigatório"),
+    }),
+    onSubmit: async (data) => {
+      try {
+        setIsSubmiting(true);
+        const response = await api.post("/auth/login", data);
+        const { token } = response.data;
+        setCookie(null, "token", token, { path: "/" });
+        if (response.data) history("/");
+      } catch (err) {
+        toast.error(err?.response?.data?.message);
+      } finally {
+        setTimeout(() => {
+          setIsSubmiting(false);
+        }, 4000);
+      }
+    },
+  });
+  const user = getUserInfo();
+
   return (
     <Fragment>
       <section className="login-content">
@@ -35,8 +74,22 @@ const SignIn = memo(() => {
               to="/"
               className="navbar-brand d-flex align-items-center  justify-content-center text-primary"
             >
-              <div className="logo-normal">
-                <img src={Logo} />
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "2rem",
+                }}
+                className="logo-normal"
+              >
+                <img
+                  style={{
+                    width: "50%",
+                  }}
+                  src={Logo}
+                />
               </div>
             </Link>
             <Row className="justify-content-center pt-5">
@@ -45,7 +98,7 @@ const SignIn = memo(() => {
                   <Card.Body>
                     <h2 className="mb-2 text-center">Entrar</h2>
                     <p className="text-center">Entre para ficar conectado.</p>
-                    <Form>
+                    <Form onSubmit={formik.handleSubmit}>
                       <Row>
                         <Col lg="12">
                           <Form.Group className="form-group">
@@ -56,9 +109,17 @@ const SignIn = memo(() => {
                               type="email"
                               className=""
                               id="email"
+                              name="email"
+                              onChange={formik.handleChange}
+                              value={formik.values.email}
                               aria-describedby="email"
                               placeholder=" "
                             />
+                            {formik.touched.email && formik.errors.email ? (
+                              <span className="text-danger">
+                                {formik.errors.email}
+                              </span>
+                            ) : null}
                           </Form.Group>
                         </Col>
                         <Col lg="12" className="">
@@ -69,10 +130,18 @@ const SignIn = memo(() => {
                             <Form.Control
                               type="password"
                               className=""
-                              id="password"
+                              id="senha"
+                              name="senha"
+                              onChange={formik.handleChange}
+                              value={formik.values.senha}
                               aria-describedby="password"
-                              placeholder=" "
+                              placeholder=""
                             />
+                            {formik.touched.senha && formik.errors.senha ? (
+                              <span className="text-danger">
+                                {formik.errors.senha}
+                              </span>
+                            ) : null}
                           </Form.Group>
                         </Col>
                         <Col lg="12" className="d-flex justify-content-between">
@@ -92,9 +161,10 @@ const SignIn = memo(() => {
                       </Row>
                       <div className="d-flex justify-content-center">
                         <Button
-                          onClick={() => history("/")}
-                          type="button"
+                          // onClick={() => history("/")}
+                          type="submit"
                           variant="btn btn-primary"
+                          disabled={isSubmiting}
                         >
                           Sign In
                         </Button>
@@ -129,12 +199,12 @@ const SignIn = memo(() => {
                           </ListGroup.Item>
                         </ListGroup>
                       </div>
-                      <p className="mt-3 text-center">
+                      {/* <p className="mt-3 text-center">
                         Não tem uma conta?{" "}
                         <Link to="/auth/sign-up" className="text-underline">
                           Clique aqui para se inscrever.
                         </Link>
-                      </p>
+                      </p> */}
                     </Form>
                   </Card.Body>
                 </Card>

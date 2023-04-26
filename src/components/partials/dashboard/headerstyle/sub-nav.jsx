@@ -34,12 +34,21 @@ import {
   theme_scheme,
   theme_scheme_direction,
 } from "../../../../store/setting/actions";
+import { getUserInfo } from "../../../../views/dashboard/auth/services";
+import useFetch from "../../../../hooks";
 
 const SunNav = () => {
   const dispatch = useDispatch();
   dispatch(setSetting());
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
+  const User = getUserInfo();
+  const { data: userData } = useFetch(`/user/list/${User?.sub}`);
+  const [user, setUser] = useState(userData);
+  const { data: FileData } = useFetch(`/file/${userData?.fotoUrl}`);
+  console.log(user, "meu");
+  console.log(FileData, "PEODODO");
+
   //fullscreen
   const fullscreen = () => {
     if (
@@ -653,7 +662,7 @@ const SunNav = () => {
               variant="py-0  d-flex align-items-center nav-link"
             >
               <img
-                src={avatar1}
+                src={FileData?.link}
                 alt="User-Profile"
                 className="theme-color-img img-fluid avatar avatar-50 avatar-rounded"
                 loading="lazy"
@@ -661,7 +670,8 @@ const SunNav = () => {
 
               <div className="caption ms-3 d-none d-md-block ">
                 <h6 className="mb-0 caption-title">
-                  Ministério da Educação (Luanda)
+                  Ministério da Educação (
+                  {userData?.Provincia?.nome?.toUpperCase()})
                 </h6>
                 <p className="mb-0 caption-sub-title">Governo de Angola</p>
               </div>
