@@ -33,6 +33,7 @@ import * as SettingSelector from "../../store/setting/selectors";
 
 // Redux Selector / Action
 import { useSelector } from "react-redux";
+import useFetch from "../../hooks";
 import { getUserInfo } from "../../views/dashboard/auth/services";
 
 const Tour = () => {
