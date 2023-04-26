@@ -1,5 +1,12 @@
-import { useEffect, memo, Fragment, useContext, Suspense } from "react";
-import { useLocation, Outlet } from "react-router-dom";
+import {
+  useEffect,
+  memo,
+  Fragment,
+  useContext,
+  Suspense,
+  useState,
+} from "react";
+import { useLocation, Outlet, useNavigate } from "react-router-dom";
 
 //react-shepherd
 import { ShepherdTour, ShepherdTourContext } from "react-shepherd";
@@ -26,6 +33,7 @@ import * as SettingSelector from "../../store/setting/selectors";
 
 // Redux Selector / Action
 import { useSelector } from "react-redux";
+import { getUserInfo } from "../../views/dashboard/auth/services";
 
 const Tour = () => {
   const tour = useContext(ShepherdTourContext);
@@ -203,27 +211,36 @@ const Default = memo((props) => {
     default:
       break;
   }
+  const [user, setUser] = useState(getUserInfo());
+  const { data } = useFetch(`/user/list/${user?.sub}`);
+  const navigate = useNavigate();
+
+  // if(!data) return Navigate("/auth/sign-in")
 
   return (
     <Fragment>
-      <ShepherdTour steps={newSteps} tourOptions={tourOptions}>
-        <Loader />
-        <Sidebar app_name={appName} />
-        <Tour />
-        <main className="main-content">
-          <div className={`${commanclass} position-relative `}>
-            <Header />
-            {subHeader}
-          </div>
-          <div className={` ${pageLayout} content-inner pb-0`}>
-            <Suspense>
-              <Outlet></Outlet>
-            </Suspense>
-          </div>
-          <Footer />
-        </main>
-        <SettingOffCanvas />
-      </ShepherdTour>
+      {data ? (
+        <ShepherdTour steps={newSteps} tourOptions={tourOptions}>
+          <Loader />
+          <Sidebar app_name={appName} />
+          <Tour />
+          <main className="main-content">
+            <div className={`${commanclass} position-relative `}>
+              <Header />
+              {subHeader}
+            </div>
+            <div className={` ${pageLayout} content-inner pb-0`}>
+              <Suspense>
+                <Outlet></Outlet>
+              </Suspense>
+            </div>
+            <Footer />
+          </main>
+          <SettingOffCanvas />
+        </ShepherdTour>
+      ) : (
+        navigate("/auth/sign-in")
+      )}
     </Fragment>
   );
 });
