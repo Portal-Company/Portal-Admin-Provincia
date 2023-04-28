@@ -1,4 +1,4 @@
-import { useEffect, memo, Fragment } from "react";
+import { useEffect, memo, Fragment, useState } from "react";
 import {
   Row,
   Col,
@@ -23,6 +23,8 @@ import { Link } from "react-router-dom";
 //component
 import CustomToggle from "../../components/dropdowns";
 import ChoicesJs from "../../components/choices";
+import { getUserInfo } from "./auth/services";
+import useFetch from "../../hooks";
 
 //select
 
@@ -41,6 +43,14 @@ const options4 = [
 
 const Crypto = memo((props) => {
   useSelector(SettingSelector.theme_color);
+  const User = getUserInfo();
+  const { data: userData } = useFetch(`/user/list/${User?.sub}`);
+  const [data, setData] = useState(userData);
+  const { data: statistc } = useFetch(
+    `/statistic/province/${data?.provinciaId}`
+  );
+  console.log(userData);
+  console.log(statistc, "estatistica");
 
   const getVariableColor = () => {
     let prefix =
@@ -603,7 +613,9 @@ const Crypto = memo((props) => {
             <Card.Body>
               <div className="d-flex justify-content-between mb-2">
                 <div className="d-flex align-items-center">
-                  <h6 className="mb-0">Total de Inscritos (Luanda)</h6>
+                  <h6 className="mb-0">
+                    Total de Inscritos ({data?.Provincia?.nome})
+                  </h6>
                 </div>
                 <Dropdown>
                   <Dropdown.Toggle
@@ -636,8 +648,8 @@ const Crypto = memo((props) => {
               </div>
               <div className="d-flex align-items-center">
                 <div>
-                  <h3>356</h3>
-                  <small className="text-success">+ 0.8%</small>
+                  <h3>{statistc?.totalInscritos}</h3>
+                  <small className="text-success">+ 0.1%</small>
                   <small className="ms-2">Candidatos</small>
                 </div>
                 <Chart
@@ -656,7 +668,7 @@ const Crypto = memo((props) => {
               <div className="d-flex justify-content-between mb-2">
                 <div className="d-flex align-items-center">
                   <h6 className="mb-0 ms-2">
-                    Total de Alunos Rejeitados (Luanda)
+                    Total de Alunos Rejeitados ({data?.Provincia?.nome})
                   </h6>
                 </div>
                 <Dropdown>
@@ -690,7 +702,7 @@ const Crypto = memo((props) => {
               </div>
               <div className="d-flex align-items-center">
                 <div>
-                  <h3>2.850</h3>
+                  <h3>{statistc?.totalInscritosRejeitados}</h3>
                   <small className="text-success">+ 0.8%</small>
                   <small className="ms-2">Alunos</small>
                 </div>
@@ -710,7 +722,7 @@ const Crypto = memo((props) => {
               <div className="d-flex justify-content-between mb-2">
                 <div className="d-flex align-items-center">
                   <h6 className="mb-0 ms-2">
-                    Total de Inscritos Apurados (Luanda)
+                    Total de Inscritos Apurados ({data?.Provincia?.nome})
                   </h6>
                 </div>
                 <Dropdown>
@@ -730,7 +742,7 @@ const Crypto = memo((props) => {
               </div>
               <div className="d-flex align-items-center">
                 <div>
-                  <h3> 34.850,10</h3>
+                  <h3>{statistc?.totalInscritosAceites}</h3>
                   <small className="text-danger">- 0.8%</small>
                   <small className="ms-2">Alunos</small>
                 </div>
@@ -749,7 +761,9 @@ const Crypto = memo((props) => {
             <Card.Body>
               <div className="d-flex justify-content-between mb-2">
                 <div className="d-flex align-items-center">
-                  <h6 className="mb-0 ms-2">Total de Escola (Luanda)</h6>
+                  <h6 className="mb-0 ms-2">
+                    Total de Escola ({data?.Provincia?.nome})
+                  </h6>
                 </div>
                 <Dropdown>
                   <Dropdown.Toggle
@@ -782,7 +796,7 @@ const Crypto = memo((props) => {
               </div>
               <div className="d-flex align-items-center">
                 <div>
-                  <h3> 34.850</h3>
+                  <h3>{statistc?.totalEscolas}</h3>
                   <small className="text-danger">- 0.8%</small>
                   <small className="ms-2">Candidatos</small>
                 </div>

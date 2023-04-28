@@ -61,10 +61,10 @@ const Maintenance = lazy(() => import("../views/dashboard/errors/maintenance"));
 const Index = lazy(() => import("../views/dashboard/index"));
 
 // User
-const UserProfile = lazy(() => import("../views/dashboard/app/user-profile"));
-const UserAdd = lazy(() => import("../views/dashboard/app/user-add"));
+// const UserProfile = lazy(() => import("../views/dashboard/app/user-profile"));
+const UserAdd = lazy(() => import("../views/dashboard/app/categoria-add"));
 
-const UserList = lazy(() => import("../views/dashboard/app/user-list"));
+const UserList = lazy(() => import("../views/dashboard/app/categoria-list"));
 // const userProfileEdit = lazy(() => import('../views/dashboard/app/user-privacy-setting'))
 
 // widget
@@ -250,7 +250,7 @@ const IndexRouters = memo(() => {
         <Route path="/escolas/escola-list" element={<EscolaList />} />
 
         {/* user */}
-        <Route path="/app/user-profile" element={<UserProfile />} />
+        {/* <Route path="/app/user-profile" element={<UserProfile />} /> */}
 
         <Route path="/app/user-add" element={<UserAdd />} />
         <Route path="/app/user-list" element={<UserList />} />

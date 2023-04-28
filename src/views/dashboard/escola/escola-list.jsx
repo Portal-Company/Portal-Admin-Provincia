@@ -16,8 +16,13 @@ import img6 from "/src/assets/images/avatars/06.png";
 import img7 from "/src/assets/images/avatars/maka.png";
 import img8 from "/src/assets/images/avatars/08.png";
 import img9 from "/src/assets/images/avatars/09.png";
+import useFetch from "../../../hooks";
+import { ImageView } from "./components/ImageView";
 
 const FuncionarioList = memo(() => {
+  const { data: School } = useFetch(`/school/list`);
+
+  console.log(School);
   const usa = (
     <svg
       width="18"
@@ -443,36 +448,32 @@ const FuncionarioList = memo(() => {
                     </tr>
                   </thead>
                   <tbody>
-                    {table1.map((item, index) => {
+                    {School?.map((item, index) => {
                       return (
                         <tr key={index}>
                           <td>
                             <div className="d-flex align-items-center">
-                              <Image
-                                className="rounded img-fluid w-25 me-3"
-                                src={item.img}
-                                alt=""
-                              />
+                              <ImageView item={item} />
                               <div className="media-support-info">
-                                <h6 className="mb-0">{item.name}</h6>
-                                <p className="mb-0">{item.desc}</p>
+                                <h6 className="mb-0">{item?.nome}</h6>
+                                <p className="mb-0">{item?.Categoria?.nome}</p>
                               </div>
                             </div>
                           </td>
-                          <td className="text-dark">{item.contact}</td>
-                          <td className="text-dark">{item.emailid}</td>
+                          <td className="text-dark">
+                            {item?.Contato?.numeroTelefone}
+                          </td>
+                          <td className="text-dark">{item?.Contato?.email}</td>
 
-                          <td className="text-dark">{item.status}</td>
+                          <td className="text-dark">{item?.nif}</td>
                           <td>
                             <div className="d-flex justify-content-evenly">
                               <Button
-                                className="btn btn-primary btn-icon btn-sm rounded-pill ms-2"
+                                className="btn btn-primary "
                                 to="#"
                                 role="button"
                               >
-                                <span className="btn-inner">
-                                  {item.actionremove}
-                                </span>
+                                Ver mais
                               </Button>
                             </div>
                           </td>

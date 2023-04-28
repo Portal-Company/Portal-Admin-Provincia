@@ -434,7 +434,7 @@ const VerticalNav = memo(() => {
                 </svg>
               </i>
             </OverlayTrigger>
-            <span className="item-name">Perfil de Saída</span>
+            <span className="item-name">Perfil</span>
             <i className="right-icon">
               <svg
                 className="icon-18"
@@ -863,7 +863,7 @@ const VerticalNav = memo(() => {
                 </svg>
               </i>
             </OverlayTrigger>
-            <span className="item-name">Departamento</span>
+            <span className="item-name">Categoria</span>
             <i className="right-icon">
               <svg
                 className="icon-18"
@@ -916,7 +916,7 @@ const VerticalNav = memo(() => {
                   >
                     <i className="sidenav-mini-icon"> A </i>
                   </OverlayTrigger>
-                  <span className="item-name">Adicionar Departamento</span>
+                  <span className="item-name">Adicionar Categoria</span>
                 </Link>
               </Nav.Item>
               <Nav.Item as="li">
@@ -950,7 +950,7 @@ const VerticalNav = memo(() => {
                   >
                     <i className="sidenav-mini-icon"> U </i>
                   </OverlayTrigger>
-                  <span className="item-name">Listar Departamento</span>
+                  <span className="item-name">Listar Categoria</span>
                 </Link>
               </Nav.Item>
             </ul>
