@@ -1,10 +1,9 @@
-import { memo, Fragment, Suspense } from 'react'
+import { memo, Fragment, Suspense } from "react";
 
 //seetingoffCanvas
-import { Outlet } from 'react-router-dom'
+import { Outlet } from "react-router-dom";
 
 const Simple = memo((props) => {
-
   return (
     <Fragment>
       <div className="wrapper">
@@ -13,9 +12,8 @@ const Simple = memo((props) => {
         </Suspense>
       </div>
     </Fragment>
-  )
-}
-)
+  );
+});
 
-Simple.displayName = "Simple"
-export default Simple
+Simple.displayName = "Simple";
+export default Simple;

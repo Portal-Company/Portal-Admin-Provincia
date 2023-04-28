@@ -23,188 +23,105 @@ const FuncionarioAdd = memo(() => {
   return (
     <Fragment>
       <Row>
-        <Col xl="3" lg="4" className="">
-          <Card>
-            <Card.Header className="d-flex justify-content-between">
-              <div className="header-title">
-                <h4 className="card-title">Nova Escola</h4>
-              </div>
-            </Card.Header>
-            <Card.Body>
-              <Form>
-                <Form.Group className="form-group">
-                  <div className="profile-img-edit position-relative">
-                    <Image
-                      className="theme-color-default-img  profile-pic rounded avatar-100"
-                      src={avatars1}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-purple-img profile-pic rounded avatar-100"
-                      src={avatars2}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-blue-img profile-pic rounded avatar-100"
-                      src={avatars3}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-green-img profile-pic rounded avatar-100"
-                      src={avatars5}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-yellow-img profile-pic rounded avatar-100"
-                      src={avatars6}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-pink-img profile-pic rounded avatar-100"
-                      src={avatars4}
-                      alt="profile-pic"
-                    />
-                    <div className="upload-icone bg-primary">
-                      <svg
-                        className="upload-button"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fill="#ffffff"
-                          d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"
-                        />
-                      </svg>
-                      <Form.Control
-                        className="file-upload"
-                        type="file"
-                        accept="image/*"
-                      />
-                    </div>
-                  </div>
-                  <div className="img-extension mt-3">
-                    <div className="d-inline-block align-items-center">
-                      <Link to="#">.jpg</Link> <Link to="#">.png</Link>{" "}
-                      <Link to="#">.jpeg</Link>{" "}
-                    </div>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="form-group">
-                  <Form.Label>Categoria</Form.Label>
-                  <select
-                    name="type"
-                    className="selectpicker form-control"
-                    data-style="py-0"
-                  >
-                    <option>Ensino Primario</option>
-                    <option>Ensino Secundário</option>
-                    <option>Ensino Médio</option>
-                  </select>
-                </Form.Group>
-
-                <Form.Group className="mb-0 form-group">
-                  <Form.Label htmlFor="lurl">Linkedin Url:</Form.Label>
+        <Card>
+          <Card.Header className="d-flex justify-content-between">
+            <div className="header-title">
+              <h4 className="card-title">Cadastrar Area de Formação</h4>
+            </div>
+          </Card.Header>
+          <Card.Body>
+            <Form onSubmit={formik?.handleSubmit} encType="multipart/form-data">
+              <Row className="mb-3">
+                <Col md="6" className="mb-3">
+                  <Form.Label htmlFor="validationCustom05">Nome</Form.Label>
                   <Form.Control
+                    onChange={formik.handleChange}
+                    name="nome"
+                    value={formik.values.nome}
                     type="text"
-                    id="lurl"
-                    placeholder="Linkedin Url"
+                    id="nome"
+                    required
                   />
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xl="9" lg="8">
-          <Card>
-            <Card.Header className="d-flex justify-content-between">
-              <div className="header-title">
-                <h4 className="card-title">Informações da nova escola</h4>
-              </div>
-            </Card.Header>
-            <Card.Body>
-              <div className="new-user-info">
-                <Form>
-                  <div className="row">
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="fname">Name:</Form.Label>
-                      <Form.Control
-                        type="text"
-                        id="fname"
-                        placeholder="Primeiro Nome"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="lname">Localização:</Form.Label>
-                      <Form.Control
-                        type="text"
-                        id="lname"
-                        placeholder="Luanda Vila Alice"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="add1">E-mail:</Form.Label>
-                      <Form.Control
-                        type="email"
-                        id="add1"
-                        placeholder="Email"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="add2">Telefone</Form.Label>
-                      <Form.Control
-                        type="number"
-                        id="add2"
-                        placeholder="Número de telefone"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="add2">NIF</Form.Label>
-                      <Form.Control
-                        type="number"
-                        id="add2"
-                        placeholder="Número de telefone"
-                      />
-                    </Form.Group>
-                  </div>
-                  <hr />
-                  <h5 className="mb-3">Dados de acesso</h5>
-                  <div className="row">
-                    <Form.Group className="col-md-12 form-group">
-                      <Form.Label htmlFor="uname">Name de Usuário:</Form.Label>
-                      <Form.Control
-                        type="text"
-                        id="uname"
-                        placeholder="ipilmakarenco"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="pass">Senha:</Form.Label>
-                      <Form.Control
-                        type="password"
-                        id="pass"
-                        placeholder="Palavra Chave"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="rpass">Repita a Senha:</Form.Label>
-                      <Form.Control
-                        type="password"
-                        id="rpass"
-                        placeholder="Repita a Senha "
-                      />
-                    </Form.Group>
-                  </div>
+                  {formik?.touched?.nome && formik?.errors?.nome ? (
+                    <label className="mt-1 text-danger">
+                      {formik?.errors?.nome}
+                    </label>
+                  ) : null}
+                  <Form.Label htmlFor="validationCustom05">
+                    Categoria
+                  </Form.Label>
+                  <Form.Select
+                    id="categoriaId"
+                    name="categoriaId"
+                    required
+                    onChange={formik.handleChange}
+                  >
+                    <option defaultChecked>Selecione um Categoria</option>
+                    {categoria?.map((item) => (
+                      <option key={item?.id} value={item?.id}>
+                        {item?.nome}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  {formik?.touched?.categoriaId &&
+                  formik?.errors?.categoriaId ? (
+                    <label className="mt-1 text-danger">
+                      {formik?.errors?.categoriaId}
+                    </label>
+                  ) : null}
 
-                  <Button type="button" variant="btn btn-primary">
-                    Adicionar
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label htmlFor="exampleFormControlTextarea1">
+                      Descrição
+                    </Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      id="descricao"
+                      value={formik.values.descricao}
+                      name="descricao"
+                      onChange={formik.handleChange}
+                      rows="5"
+                    />
+                    {formik?.touched?.descricao && formik?.errors?.descricao ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.descricao}
+                      </label>
+                    ) : null}
+                  </Form.Group>
+                </Col>
+                <Col md="6" className="mb-3">
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label className="custom-file-input">
+                      Carregar imagem
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      id="fotoUrl"
+                      name="fotoUrl"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "fotoUrl",
+                          event?.currentTarget?.files
+                        );
+                      }}
+                    />
+                    {formik?.touched?.fotoUrl && formik?.errors?.fotoUrl ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.fotoUrl}
+                      </label>
+                    ) : null}
+                  </Form.Group>
+                </Col>
+
+                <div className="col-12">
+                  <Button type="submit" disabled={isSubmiting}>
+                    Cadastrar
                   </Button>
-                </Form>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
+                </div>
+              </Row>
+            </Form>
+          </Card.Body>
+        </Card>
       </Row>
     </Fragment>
   );
