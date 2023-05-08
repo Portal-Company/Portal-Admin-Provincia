@@ -86,7 +86,7 @@ const UserList = () => {
                   <tbody>
                     {!Inscricao?.length && (
                       <div className="text-center text-blue pt-4">
-                        Sem candidatos aceites no momento
+                        Sem candidatos pendentes no momento
                       </div>
                     )}
                     {Inscricao?.filter((item) =>
