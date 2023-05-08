@@ -23,6 +23,7 @@ import { getUserInfo } from "../auth/services";
 import useFetch from "../../../hooks";
 import { ModalDelete } from "../../../components/ModalConfirm";
 import { ModalUpdate } from "./components/ModalUpdate";
+import { ImageView } from "../../../components/ImageView";
 
 const UserList = memo(() => {
   const user = getUserInfo();
@@ -107,7 +108,10 @@ const UserList = memo(() => {
                   <tbody>
                     {Area?.map((item, idx) => (
                       <tr key={idx}>
-                        <td>{item?.nome}</td>
+                        <td>
+                          <ImageView item={item} type={"fotoUrl"} />
+                          {item?.nome}
+                        </td>
                         <td>{item?.Categoria?.nome}</td>
 
                         <td>

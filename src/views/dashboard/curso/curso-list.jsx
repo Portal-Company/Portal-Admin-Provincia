@@ -18,6 +18,7 @@ import useFetch from "../../../hooks";
 import { toast } from "react-toastify";
 import { ModalDelete } from "../../../components/ModalConfirm";
 import { ModalUpdate } from "./ModalUpdate";
+import { ImageView } from "../../../components/ImageView";
 
 const UserList = memo(() => {
   const user = getUserInfo();
@@ -102,7 +103,10 @@ const UserList = memo(() => {
                   <tbody>
                     {Courses?.map((item, idx) => (
                       <tr key={idx}>
-                        <td>{item.nome}</td>
+                        <td>
+                          <ImageView item={item} type={"fotoUrl"} />
+                          {item.nome}
+                        </td>
                         <td>{item?.AreaDeFormacao?.nome}</td>
 
                         <td>

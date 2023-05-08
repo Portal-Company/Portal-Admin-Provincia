@@ -28,38 +28,41 @@ const FuncionarioAdd = memo(() => {
   const user = getUserInfo();
   const [isSubmiting, setIsSubmiting] = useState(false);
   const { data: userData } = useFetch(`/user/list/${user?.sub}`);
-  const { data: categoria } = useFetch(`/category/list`);
+  const { data: categoria } = useFetch(`/province/list`);
+  const { data: schools } = useFetch(`/school/list`);
+
+  console.log(schools);
 
   const formik = useFormik({
     initialValues: {
       nome: "",
-      nif: "",
+      email: "",
+      senha: "",
       fotoUrl: "",
-      logo: "",
-      categoriaId: "",
-      provinciaId: userData?.Provincia?.id,
+      provinciaId: userData?.provinciaId,
+      escolaId: "",
+      tipoUsuario: "ADMINISTRADOR_ESCOLA",
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
       fotoUrl: yup.string().required("Este campo  é obrigatório"),
-      logo: yup.string().required("Este campo  é obrigatório"),
-      nif: yup.string().required("Este campo é obrigatório"),
-      categoriaId: yup.string().required("Este campo é obrigatório"),
+      senha: yup.string().required("Este campo  é obrigatório"),
+      email: yup.string().required("Este campo  é obrigatório"),
+      provinciaId: yup.string().required("Este campo  é obrigatório"),
+      escolaId: yup.string().required("Este campo  é obrigatório"),
+      tipoUsuario: yup.string().required("Este campo  é obrigatório"),
     }),
     onSubmit: async (data) => {
       try {
         setIsSubmiting(true);
         const formData = new FormData();
-        const formData1 = new FormData();
-        formData1.append("file", data?.logo[0]);
         formData.append("file", data?.fotoUrl[0]);
-        const logo = await getFile(formData1);
         const fotoUrl = await getFile(formData);
         if (fotoUrl) {
-          data = { ...data, fotoUrl: fotoUrl?.id, logo: logo?.id };
-          const response = await api.post("/school/post", data);
+          data = { ...data, fotoUrl: fotoUrl?.id };
+          const response = await api.post("/user/post", data);
           if (response) {
-            toast.success("Escola cadastrada com sucesso");
+            toast.success("Administrador cadastrado com sucesso");
             formik.resetForm();
           }
         }
@@ -79,15 +82,13 @@ const FuncionarioAdd = memo(() => {
     return dataD.data;
   }
 
-  console.log(formik.errors);
-
   return (
     <Fragment>
       <Row>
         <Card>
           <Card.Header className="d-flex justify-content-between">
             <div className="header-title">
-              <h4 className="card-title">Cadastrar Escola</h4>
+              <h4 className="card-title">Cadastrar Administrador (Escola)</h4>
             </div>
           </Card.Header>
           <Card.Body>
@@ -108,46 +109,47 @@ const FuncionarioAdd = memo(() => {
                       {formik?.errors?.nome}
                     </label>
                   ) : null}
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label htmlFor="exampleFormControlTextarea1">
+                      Email
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      id="email"
+                      value={formik.values.email}
+                      name="email"
+                      onChange={formik.handleChange}
+                    />
+                    {formik?.touched?.email && formik?.errors?.email ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.email}
+                      </label>
+                    ) : null}
+                  </Form.Group>
                   <Form.Label htmlFor="validationCustom05">
-                    Categoria
+                    Provincia
                   </Form.Label>
                   <Form.Select
-                    id="categoriaId"
-                    name="categoriaId"
+                    id="provinciaId"
+                    name="provinciaId"
+                    value={formik.values.provinciaId}
                     required
+                    disabled={true}
                     onChange={formik.handleChange}
                   >
-                    <option defaultChecked>Selecione um Categoria</option>
+                    <option defaultChecked>Selecione uma provincia</option>
                     {categoria?.map((item) => (
                       <option key={item?.id} value={item?.id}>
                         {item?.nome}
                       </option>
                     ))}
                   </Form.Select>
-                  {formik?.touched?.categoriaId &&
-                  formik?.errors?.categoriaId ? (
+                  {formik?.touched?.provinciaId &&
+                  formik?.errors?.provinciaId ? (
                     <label className="mt-1 text-danger">
-                      {formik?.errors?.categoriaId}
+                      {formik?.errors?.provinciaId}
                     </label>
                   ) : null}
-
-                  <Form.Group className="mb-3 form-group mt-2">
-                    <Form.Label htmlFor="exampleFormControlTextarea1">
-                      NIF
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      id="nif"
-                      value={formik.values.nif}
-                      name="nif"
-                      onChange={formik.handleChange}
-                    />
-                    {formik?.touched?.nif && formik?.errors?.nif ? (
-                      <label className="mt-1 text-danger">
-                        {formik?.errors?.nif}
-                      </label>
-                    ) : null}
-                  </Form.Group>
                 </Col>
                 <Col md="6" className="mb-3">
                   <Form.Group className="mb-3 form-group mt-2">
@@ -172,26 +174,43 @@ const FuncionarioAdd = memo(() => {
                     ) : null}
                   </Form.Group>
                   <Form.Group className="mb-3 form-group mt-2">
-                    <Form.Label className="custom-file-input">
-                      Carregar imagem logo
+                    <Form.Label htmlFor="exampleFormControlTextarea1">
+                      Senha
                     </Form.Label>
                     <Form.Control
-                      type="file"
-                      id="logo"
-                      name="logo"
-                      onChange={(event) => {
-                        formik.setFieldValue(
-                          "logo",
-                          event?.currentTarget?.files
-                        );
-                      }}
+                      type="password"
+                      id="senha"
+                      value={formik.values.senha}
+                      name="senha"
+                      onChange={formik.handleChange}
                     />
-                    {formik?.touched?.logo && formik?.errors?.logo ? (
+                    {formik?.touched?.senha && formik?.errors?.senha ? (
                       <label className="mt-1 text-danger">
-                        {formik?.errors?.logo}
+                        {formik?.errors?.senha}
                       </label>
                     ) : null}
                   </Form.Group>
+                  <Form.Label htmlFor="validationCustom05">Escola</Form.Label>
+                  <Form.Select
+                    id="escolaId"
+                    name="escolaId"
+                    value={formik.values.escolaId}
+                    required
+                    // disabled={true}
+                    onChange={formik.handleChange}
+                  >
+                    <option defaultChecked>Selecione uma escola</option>
+                    {schools?.map((item) => (
+                      <option key={item?.id} value={item?.id}>
+                        {item?.nome}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  {formik?.touched?.escolaId && formik?.errors?.escolaId ? (
+                    <label className="mt-1 text-danger">
+                      {formik?.errors?.escolaId}
+                    </label>
+                  ) : null}
                 </Col>
 
                 <div className="col-12">
