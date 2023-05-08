@@ -20,7 +20,7 @@ export const ViewSchool = ({ item, show, handleClose, setIsModal }) => {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Dados da Escola</Modal.Title>
+          <Modal.Title>Dados do Administrador</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div

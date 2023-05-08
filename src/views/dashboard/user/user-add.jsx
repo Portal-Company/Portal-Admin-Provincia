@@ -78,7 +78,6 @@ const FuncionarioAdd = memo(() => {
 
   async function getFile(data) {
     const dataD = await api.post("/file", data);
-
     return dataD.data;
   }
 
