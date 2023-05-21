@@ -855,7 +855,7 @@ const Crypto = memo((props) => {
             <div className=" p-4 d-flex align-items-center justify-content-between flex-wrap pb-0">
               <div className="header-title">
                 <h6 className="mb-2">Estatistica 2023</h6>
-                <h3 className="mb-2">Total 26,246.00</h3>
+                <h3 className="mb-2">Total 2246.00</h3>
                 <p className="mb-0 text-danger bg-white p-1 px-3 rounded">
                   526.23(-2.42%) Por dia
                 </p>
@@ -891,11 +891,11 @@ const Crypto = memo((props) => {
             </div>
             <Card.Body className="pt-0">
               <hr />
-              <h4 className="mb-3">Cursos</h4>
+              <h4 className="mb-3">Categoria</h4>
               <div className="d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center">
                   <div className="ms-2">
-                    <h6>Química</h6>
+                    <h6>Puniv</h6>
                     <p className="mb-0">234 Candidatos</p>
                   </div>
                 </div>
@@ -905,8 +905,8 @@ const Crypto = memo((props) => {
               <div className="d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center">
                   <div className="ms-2">
-                    <h6>Electricidade</h6>
-                    <p className="mb-0">34.231 Candidato</p>
+                    <h6>Politécnico</h6>
+                    <p className="mb-0">100 Candidato</p>
                   </div>
                 </div>
                 <h5 className="text-white">13%</h5>
@@ -915,22 +915,13 @@ const Crypto = memo((props) => {
               <div className="d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center">
                   <div className="ms-2">
-                    <h6>Informática</h6>
+                    <h6>Saúde</h6>
                     <p className="mb-0">821 Candidato</p>
                   </div>
                 </div>
                 <h5 className="text-white">86%</h5>
               </div>
               <hr />
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center">
-                  <div className="ms-2">
-                    <h6>Mecânicas</h6>
-                    <p className="mb-0">235 Candidato</p>
-                  </div>
-                </div>
-                <h5 className="text-white">46%</h5>
-              </div>
             </Card.Body>
           </Card>
         </Col>

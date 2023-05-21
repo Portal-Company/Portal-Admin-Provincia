@@ -119,7 +119,7 @@ const VerticalNav = memo(() => {
           </Link>
         </Nav.Item>
 
-        <Accordion.Item
+        {/* <Accordion.Item
           as="li"
           eventKey="sidebar-auth"
           bsPrefix={`nav-item ${active === "auth" ? "active" : ""} `}
@@ -245,9 +245,9 @@ const VerticalNav = memo(() => {
               </Nav.Item>
             </ul>
           </Accordion.Collapse>
-        </Accordion.Item>
+        </Accordion.Item> */}
 
-        <Accordion.Item
+        {/* <Accordion.Item
           as="li"
           eventKey="utilities-error"
           bsPrefix={`nav-item ${active === "error" ? "active" : ""} `}
@@ -380,7 +380,7 @@ const VerticalNav = memo(() => {
               </Nav.Item>
             </ul>
           </Accordion.Collapse>
-        </Accordion.Item>
+        </Accordion.Item> */}
 
         <Accordion.Item
           as="li"
@@ -455,7 +455,7 @@ const VerticalNav = memo(() => {
           </CustomToggle>
           <Accordion.Collapse eventKey="sidebar-user">
             <ul className="sub-nav">
-              <Nav.Item as="li">
+              {/* <Nav.Item as="li">
                 <Link
                   className={`${
                     location.pathname === "/perfil-saida/perfil-conf"
@@ -490,7 +490,7 @@ const VerticalNav = memo(() => {
                   </OverlayTrigger>
                   <span className="item-name">Configurar Perfil</span>
                 </Link>
-              </Nav.Item>
+              </Nav.Item> */}
               <Nav.Item as="li">
                 <Link
                   className={`${

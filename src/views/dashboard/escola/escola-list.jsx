@@ -13,13 +13,22 @@ import { ImageView } from "../../../components/ImageView";
 import { ViewSchool } from "./components/viewSchool";
 import { ModalUpdate } from "./components/ModalUpdate";
 import { ViewDataCandidate } from "../inscritos/components";
+import { getUserInfo } from "../auth/services";
 
 const FuncionarioList = memo(() => {
+  const user = getUserInfo();
+  const { data: userData } = useFetch(`/user/list/${user?.sub}`);
   const { data: School } = useFetch(`/school/list`);
   const [item, setItem] = useState({});
   const [isModal, setIsModal] = useState(false);
 
   console.log(School);
+
+  const SchoolData = School?.length
+    ? School?.filter(
+        (item) => item?.Localizacao?.Provincia?.id === userData?.provinciaId
+      )
+    : [];
 
   function handleView(item) {
     setIsModal(true);
@@ -56,7 +65,7 @@ const FuncionarioList = memo(() => {
                     </tr>
                   </thead>
                   <tbody>
-                    {School?.map((item, index) => {
+                    {SchoolData?.map((item, index) => {
                       return (
                         <tr key={index}>
                           <td>

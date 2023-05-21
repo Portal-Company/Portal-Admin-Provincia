@@ -41,8 +41,36 @@ const FuncionarioAdd = memo(() => {
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
-      fotoUrl: yup.string().required("Este campo  é obrigatório"),
-      logo: yup.string().required("Este campo  é obrigatório"),
+      fotoUrl: yup
+        .mixed()
+        .test(
+          "isImage",
+          "Por favor selecione um arquivo de imagem válido!",
+          (value) => {
+            if (!value) return true; // permite que o campo seja vazio
+            return (
+              value &&
+              ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
+                value.type
+              )
+            );
+          }
+        ),
+      logo: yup
+        .mixed()
+        .test(
+          "isImage",
+          "Por favor selecione um arquivo de imagem válido!",
+          (value) => {
+            if (!value) return true; // permite que o campo seja vazio
+            return (
+              value &&
+              ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
+                value.type
+              )
+            );
+          }
+        ),
       nif: yup.string().required("Este campo é obrigatório"),
       categoriaId: yup.string().required("Este campo é obrigatório"),
     }),
