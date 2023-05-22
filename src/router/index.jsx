@@ -6,6 +6,9 @@ import { Routes, Route } from "react-router-dom";
 const CursoAdd = lazy(() => import("../views/dashboard/curso/curso-add"));
 const CursoList = lazy(() => import("../views/dashboard/curso/curso-list"));
 
+const UserAdd1 = lazy(() => import("../views/dashboard/user/user-add"));
+const UserList1 = lazy(() => import("../views/dashboard/user/user-list"));
+
 const ConfPerfil = lazy(() =>
   import("../views/dashboard/perfil-saida/perfil-conf")
 );
@@ -61,10 +64,10 @@ const Maintenance = lazy(() => import("../views/dashboard/errors/maintenance"));
 const Index = lazy(() => import("../views/dashboard/index"));
 
 // User
-const UserProfile = lazy(() => import("../views/dashboard/app/user-profile"));
-const UserAdd = lazy(() => import("../views/dashboard/app/user-add"));
+// const UserProfile = lazy(() => import("../views/dashboard/app/user-profile"));
+const UserAdd = lazy(() => import("../views/dashboard/app/categoria-add"));
 
-const UserList = lazy(() => import("../views/dashboard/app/user-list"));
+const UserList = lazy(() => import("../views/dashboard/app/categoria-list"));
 // const userProfileEdit = lazy(() => import('../views/dashboard/app/user-privacy-setting'))
 
 // widget
@@ -204,6 +207,7 @@ const IndexRouters = memo(() => {
         <Route path="error-500" element={<Error500 />} />
         <Route path="maintenance" element={<Maintenance />} />
       </Route>
+      <Route path="*" element={<Error404 />} />
       {/* auth */}
       <Route path="/auth" element={<Simple />}>
         <Route path="confirm-mail" element={<ConfirmMail />} />
@@ -221,6 +225,9 @@ const IndexRouters = memo(() => {
         <Route path="/" element={<Crypto />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/crypto" element={<Crypto />} />
+
+        <Route path="/user/user-add" element={<UserAdd1 />} />
+        <Route path="/user/user-list" element={<UserList1 />} />
 
         {/* Curso */}
         <Route path="/curso/curso-add" element={<CursoAdd />} />
@@ -250,7 +257,7 @@ const IndexRouters = memo(() => {
         <Route path="/escolas/escola-list" element={<EscolaList />} />
 
         {/* user */}
-        <Route path="/app/user-profile" element={<UserProfile />} />
+        {/* <Route path="/app/user-profile" element={<UserProfile />} /> */}
 
         <Route path="/app/user-add" element={<UserAdd />} />
         <Route path="/app/user-list" element={<UserList />} />

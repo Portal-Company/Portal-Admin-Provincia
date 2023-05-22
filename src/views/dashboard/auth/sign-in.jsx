@@ -51,9 +51,13 @@ const SignIn = memo(() => {
       try {
         setIsSubmiting(true);
         const response = await api.post("/auth/login", data);
-        const { token } = response.data;
+        const { token, user } = response.data;
         setCookie(null, "token", token, { path: "/" });
-        if (response.data) history("/");
+        if (response.data && user?.tipoUsuario === "ADMINISTRADOR_PROVINCIAL") {
+          history("/");
+        } else {
+          toast.error("email ou senha incorrecta");
+        }
       } catch (err) {
         toast.error(err?.response?.data?.message);
       } finally {

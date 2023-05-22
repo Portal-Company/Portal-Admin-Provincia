@@ -18,17 +18,12 @@ import { getUserInfo } from "../auth/services";
 const FuncionarioList = memo(() => {
   const user = getUserInfo();
   const { data: userData } = useFetch(`/user/list/${user?.sub}`);
-  const { data: School } = useFetch(`/school/list`);
+  const { data: School } = useFetch(`/user/list`);
   const [item, setItem] = useState({});
   const [isModal, setIsModal] = useState(false);
 
   console.log(School);
-
-  const SchoolData = School?.length
-    ? School?.filter(
-        (item) => item?.Localizacao?.Provincia?.id === userData?.provinciaId
-      )
-    : [];
+  console.log(userData);
 
   function handleView(item) {
     setIsModal(true);
@@ -57,32 +52,39 @@ const FuncionarioList = memo(() => {
                   <thead>
                     <tr className="bg-white">
                       <th scope="col">Nome</th>
-                      <th scope="col">Contacto</th>
+                      {/* <th scope="col">Contacto</th> */}
                       <th scope="col">Email</th>
 
-                      <th scope="col">NIF</th>
+                      {/* <th scope="col">NIF</th> */}
                       <th scope="col">Acção</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {SchoolData?.map((item, index) => {
+                    {School?.map((item, index) => {
+                      if (
+                        item?.tipoUsuario === "ADMINISTRADOR_GERAL" ||
+                        (item?.tipoUsuario === "ADMINISTRADOR_PROVINCIAL" &&
+                          item?.Localizacao?.Provincia?.id !==
+                            userData?.provinciaId)
+                      )
+                        return;
                       return (
                         <tr key={index}>
                           <td>
                             <div className="d-flex align-items-center">
-                              <ImageView item={item} />
+                              <ImageView item={item} type={"fotoUrl"} />
                               <div className="media-support-info">
                                 <h6 className="mb-0">{item?.nome}</h6>
                                 <p className="mb-0">{item?.Categoria?.nome}</p>
                               </div>
                             </div>
                           </td>
-                          <td className="text-dark">
+                          {/* <td className="text-dark">
                             {item?.Contato?.numeroTelefone}
-                          </td>
-                          <td className="text-dark">{item?.Contato?.email}</td>
+                          </td> */}
+                          <td className="text-dark">{item?.email}</td>
 
-                          <td className="text-dark">{item?.nif}</td>
+                          {/* <td className="text-dark">{item?.nif}</td> */}
                           <td>
                             <div className="d-flex justify-content-evenly">
                               <Button

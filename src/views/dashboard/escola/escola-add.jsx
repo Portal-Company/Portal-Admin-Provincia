@@ -5,6 +5,7 @@ import { Row, Col, Image, Form, Button } from "react-bootstrap";
 
 //components
 import Card from "../../../components/bootstrap/card";
+import * as yup from "yup";
 
 //router
 import { Link } from "react-router-dom";
@@ -16,195 +17,220 @@ import avatars3 from "/src/assets/images/avatars/avtar_2.png";
 import avatars4 from "/src/assets/images/avatars/avtar_3.png";
 import avatars5 from "/src/assets/images/avatars/avtar_4.png";
 import avatars6 from "/src/assets/images/avatars/avtar_5.png";
+import useFetch from "../../../hooks";
+import { getUserInfo } from "../auth/services";
+import { useFormik } from "formik";
+import { toast } from "react-toastify";
+import { api } from "../../../services";
 
 const FuncionarioAdd = memo(() => {
   const [isProf, setProf] = useState(false);
+  const user = getUserInfo();
+  const [isSubmiting, setIsSubmiting] = useState(false);
+  const { data: userData } = useFetch(`/user/list/${user?.sub}`);
+  const { data: categoria } = useFetch(`/category/list`);
+
+  const formik = useFormik({
+    initialValues: {
+      nome: "",
+      nif: "",
+      fotoUrl: "",
+      logo: "",
+      categoriaId: "",
+      provinciaId: userData?.Provincia?.id,
+    },
+    validationSchema: yup.object({
+      nome: yup.string().required("Este campo é obrigatório"),
+      fotoUrl: yup
+        .mixed()
+        .test(
+          "isImage",
+          "Por favor selecione um arquivo de imagem válido!",
+          (value) => {
+            if (!value) return true; // permite que o campo seja vazio
+            return (
+              value &&
+              ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
+                value.type
+              )
+            );
+          }
+        ),
+      logo: yup
+        .mixed()
+        .test(
+          "isImage",
+          "Por favor selecione um arquivo de imagem válido!",
+          (value) => {
+            if (!value) return true; // permite que o campo seja vazio
+            return (
+              value &&
+              ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
+                value.type
+              )
+            );
+          }
+        ),
+      nif: yup.string().required("Este campo é obrigatório"),
+      categoriaId: yup.string().required("Este campo é obrigatório"),
+    }),
+    onSubmit: async (data) => {
+      try {
+        setIsSubmiting(true);
+        const formData = new FormData();
+        const formData1 = new FormData();
+        formData1.append("file", data?.logo[0]);
+        formData.append("file", data?.fotoUrl[0]);
+        const logo = await getFile(formData1);
+        const fotoUrl = await getFile(formData);
+        if (fotoUrl) {
+          data = { ...data, fotoUrl: fotoUrl?.id, logo: logo?.id };
+          const response = await api.post("/school/post", data);
+          if (response) {
+            toast.success("Escola cadastrada com sucesso");
+            formik.resetForm();
+          }
+        }
+      } catch (err) {
+        toast.error(err?.response?.data?.message);
+      } finally {
+        setTimeout(() => {
+          setIsSubmiting(false);
+        }, 4000);
+      }
+    },
+  });
+
+  async function getFile(data) {
+    const dataD = await api.post("/file", data);
+
+    return dataD.data;
+  }
+
+  console.log(formik.errors);
 
   return (
     <Fragment>
       <Row>
-        <Col xl="3" lg="4" className="">
-          <Card>
-            <Card.Header className="d-flex justify-content-between">
-              <div className="header-title">
-                <h4 className="card-title">Nova Escola</h4>
-              </div>
-            </Card.Header>
-            <Card.Body>
-              <Form>
-                <Form.Group className="form-group">
-                  <div className="profile-img-edit position-relative">
-                    <Image
-                      className="theme-color-default-img  profile-pic rounded avatar-100"
-                      src={avatars1}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-purple-img profile-pic rounded avatar-100"
-                      src={avatars2}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-blue-img profile-pic rounded avatar-100"
-                      src={avatars3}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-green-img profile-pic rounded avatar-100"
-                      src={avatars5}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-yellow-img profile-pic rounded avatar-100"
-                      src={avatars6}
-                      alt="profile-pic"
-                    />
-                    <Image
-                      className="theme-color-pink-img profile-pic rounded avatar-100"
-                      src={avatars4}
-                      alt="profile-pic"
-                    />
-                    <div className="upload-icone bg-primary">
-                      <svg
-                        className="upload-button"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          fill="#ffffff"
-                          d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z"
-                        />
-                      </svg>
-                      <Form.Control
-                        className="file-upload"
-                        type="file"
-                        accept="image/*"
-                      />
-                    </div>
-                  </div>
-                  <div className="img-extension mt-3">
-                    <div className="d-inline-block align-items-center">
-                      <Link to="#">.jpg</Link> <Link to="#">.png</Link>{" "}
-                      <Link to="#">.jpeg</Link>{" "}
-                    </div>
-                  </div>
-                </Form.Group>
-
-                <Form.Group className="form-group">
-                  <Form.Label>Categoria</Form.Label>
-                  <select
-                    name="type"
-                    className="selectpicker form-control"
-                    data-style="py-0"
-                  >
-                    <option>Ensino Primario</option>
-                    <option>Ensino Secundário</option>
-                    <option>Ensino Médio</option>
-                  </select>
-                </Form.Group>
-
-                <Form.Group className="mb-0 form-group">
-                  <Form.Label htmlFor="lurl">Linkedin Url:</Form.Label>
+        <Card>
+          <Card.Header className="d-flex justify-content-between">
+            <div className="header-title">
+              <h4 className="card-title">Cadastrar Escola</h4>
+            </div>
+          </Card.Header>
+          <Card.Body>
+            <Form onSubmit={formik?.handleSubmit} encType="multipart/form-data">
+              <Row className="mb-3">
+                <Col md="6" className="mb-3">
+                  <Form.Label htmlFor="validationCustom05">Nome</Form.Label>
                   <Form.Control
+                    onChange={formik.handleChange}
+                    name="nome"
+                    value={formik.values.nome}
                     type="text"
-                    id="lurl"
-                    placeholder="Linkedin Url"
+                    id="nome"
+                    required
                   />
-                </Form.Group>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col xl="9" lg="8">
-          <Card>
-            <Card.Header className="d-flex justify-content-between">
-              <div className="header-title">
-                <h4 className="card-title">Informações da nova escola</h4>
-              </div>
-            </Card.Header>
-            <Card.Body>
-              <div className="new-user-info">
-                <Form>
-                  <div className="row">
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="fname">Name:</Form.Label>
-                      <Form.Control
-                        type="text"
-                        id="fname"
-                        placeholder="Primeiro Nome"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="lname">Localização:</Form.Label>
-                      <Form.Control
-                        type="text"
-                        id="lname"
-                        placeholder="Luanda Vila Alice"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="add1">E-mail:</Form.Label>
-                      <Form.Control
-                        type="email"
-                        id="add1"
-                        placeholder="Email"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="add2">Telefone</Form.Label>
-                      <Form.Control
-                        type="number"
-                        id="add2"
-                        placeholder="Número de telefone"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="add2">NIF</Form.Label>
-                      <Form.Control
-                        type="number"
-                        id="add2"
-                        placeholder="Número de telefone"
-                      />
-                    </Form.Group>
-                  </div>
-                  <hr />
-                  <h5 className="mb-3">Dados de acesso</h5>
-                  <div className="row">
-                    <Form.Group className="col-md-12 form-group">
-                      <Form.Label htmlFor="uname">Name de Usuário:</Form.Label>
-                      <Form.Control
-                        type="text"
-                        id="uname"
-                        placeholder="ipilmakarenco"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="pass">Senha:</Form.Label>
-                      <Form.Control
-                        type="password"
-                        id="pass"
-                        placeholder="Palavra Chave"
-                      />
-                    </Form.Group>
-                    <Form.Group className="col-md-6 form-group">
-                      <Form.Label htmlFor="rpass">Repita a Senha:</Form.Label>
-                      <Form.Control
-                        type="password"
-                        id="rpass"
-                        placeholder="Repita a Senha "
-                      />
-                    </Form.Group>
-                  </div>
+                  {formik?.touched?.nome && formik?.errors?.nome ? (
+                    <label className="mt-1 text-danger">
+                      {formik?.errors?.nome}
+                    </label>
+                  ) : null}
+                  <Form.Label htmlFor="validationCustom05">
+                    Categoria
+                  </Form.Label>
+                  <Form.Select
+                    id="categoriaId"
+                    name="categoriaId"
+                    required
+                    onChange={formik.handleChange}
+                  >
+                    <option defaultChecked>Selecione um Categoria</option>
+                    {categoria?.map((item) => (
+                      <option key={item?.id} value={item?.id}>
+                        {item?.nome}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  {formik?.touched?.categoriaId &&
+                  formik?.errors?.categoriaId ? (
+                    <label className="mt-1 text-danger">
+                      {formik?.errors?.categoriaId}
+                    </label>
+                  ) : null}
 
-                  <Button type="button" variant="btn btn-primary">
-                    Adicionar
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label htmlFor="exampleFormControlTextarea1">
+                      NIF
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      id="nif"
+                      value={formik.values.nif}
+                      name="nif"
+                      onChange={formik.handleChange}
+                    />
+                    {formik?.touched?.nif && formik?.errors?.nif ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.nif}
+                      </label>
+                    ) : null}
+                  </Form.Group>
+                </Col>
+                <Col md="6" className="mb-3">
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label className="custom-file-input">
+                      Carregar imagem
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      id="fotoUrl"
+                      name="fotoUrl"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "fotoUrl",
+                          event?.currentTarget?.files
+                        );
+                      }}
+                    />
+                    {formik?.touched?.fotoUrl && formik?.errors?.fotoUrl ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.fotoUrl}
+                      </label>
+                    ) : null}
+                  </Form.Group>
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label className="custom-file-input">
+                      Carregar imagem logo
+                    </Form.Label>
+                    <Form.Control
+                      type="file"
+                      id="logo"
+                      name="logo"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "logo",
+                          event?.currentTarget?.files
+                        );
+                      }}
+                    />
+                    {formik?.touched?.logo && formik?.errors?.logo ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.logo}
+                      </label>
+                    ) : null}
+                  </Form.Group>
+                </Col>
+
+                <div className="col-12">
+                  <Button type="submit" disabled={isSubmiting}>
+                    Cadastrar
                   </Button>
-                </Form>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
+                </div>
+              </Row>
+            </Form>
+          </Card.Body>
+        </Card>
       </Row>
     </Fragment>
   );

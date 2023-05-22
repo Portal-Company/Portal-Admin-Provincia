@@ -2,46 +2,41 @@ import { memo, Fragment, useContext, useState } from "react";
 
 //react-bootstrap
 import { Row, Col, Image } from "react-bootstrap";
-import { api } from "../../../services";
-//router
-import { Link, useNavigate } from "react-router-dom";
 
+//router
+import { Link } from "react-router-dom";
+import useSWR, { mutate } from "swr";
 //components
 import Card from "../../../components/bootstrap/card";
 // import { UserContext } from "../../../context";
-import useSWR, { mutate } from "swr";
 
 // img
-import shap1 from "/src/assets/images/shapes/01.png";
-import shap2 from "/src/assets/images/shapes/02.png";
-import shap3 from "/src/assets/images/shapes/03.png";
-import shap4 from "/src/assets/images/shapes/04.png";
-import shap5 from "/src/assets/images/shapes/05.png";
-import shap6 from "/src/assets/images/shapes/06.png";
-import { toast } from "react-toastify";
+
+import { api } from "../../../services";
 import { getUserInfo } from "../auth/services";
 import useFetch from "../../../hooks";
+import { toast } from "react-toastify";
 import { ModalDelete } from "../../../components/ModalConfirm";
-import { ModalUpdate } from "./components/ModalUpdate";
-import { ImageView } from "../../../components/ImageView";
+import { ModalUpdate } from "./ModalUpdate";
 
-const UserList = memo(() => {
+const CargoList = memo(() => {
   const user = getUserInfo();
-
   const { data: userData } = useFetch(`/user/list/${user?.sub}`);
-  const { data: Area } = useFetch(`/trainingArea/list`);
+  const { data: Categoria } = useFetch(`/category/list`);
   const [item, setItem] = useState({});
+
+  console.log(userData);
 
   const [showModal, setShowModal] = useState(false);
   const [showModalUpdate, setShowModalUpadate] = useState(false);
 
   function handleChange() {
-    mutate(`/trainingArea/list`);
+    mutate(`/category/list`);
   }
 
   async function handleDeleteConfirm(id) {
     try {
-      const data = await api.delete(`trainingArea/delete/${id}`);
+      const data = await api.delete(`category/delete/${id}`);
       if (data?.data) {
         toast.success("deletado com sucesso!");
         handleChange();
@@ -77,7 +72,7 @@ const UserList = memo(() => {
           onClose={() => setShowModal(false)}
           onConfirm={() => handleDeleteConfirm(item?.id)}
           item={item}
-          desc="area de"
+          desc="cargo de"
         />
       ) : null}
       <Row>
@@ -85,7 +80,7 @@ const UserList = memo(() => {
           <Card>
             <Card.Header className="d-flex justify-content-between">
               <div className="header-title">
-                <h4 className="card-title">Listagem de Area de Formação</h4>
+                <h4 className="card-title">Listagem de Categoria</h4>
               </div>
             </Card.Header>
             <Card.Body className="px-0">
@@ -98,21 +93,22 @@ const UserList = memo(() => {
                 >
                   <thead>
                     <tr className="ligth">
-                      <th>Area de Formação</th>
+                      <th>Name da Categoria</th>
 
-                      <th>Categoria</th>
+                      <th>Status</th>
 
                       <th min-width="100px">Acção</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {Area?.map((item, idx) => (
+                    {Categoria?.map((item, idx) => (
                       <tr key={idx}>
+                        <td>{item.nome}</td>
                         <td>
-                          <ImageView item={item} type={"fotoUrl"} />
-                          {item?.nome}
+                          <span className={`badge ${item.color}`}>
+                            {item.status}
+                          </span>
                         </td>
-                        <td>{item?.Categoria?.nome}</td>
 
                         <td>
                           <div className="flex align-items-center list-user-action">
@@ -214,5 +210,5 @@ const UserList = memo(() => {
   );
 });
 
-UserList.displayName = "UserList";
-export default UserList;
+CargoList.displayName = "CargoList";
+export default CargoList;

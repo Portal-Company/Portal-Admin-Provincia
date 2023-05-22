@@ -1,92 +1,51 @@
 import { memo, Fragment, useState } from "react";
 
 //react-bootstrap
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image, Button } from "react-bootstrap";
 
 //router
 import { Link } from "react-router-dom";
 
 //components
 import Card from "../../../components/bootstrap/card";
-
-const userlist = [
-  {
-    name: "Hans Olo",
-    phone: "+91 2586 253 125",
-    email: "hansolo@gmail.com",
-    country: "12",
-    status: "Rejeitado",
-
-    joindate: "2019/12/01",
-    color: "bg-danger",
-  },
-
-  {
-    name: "António Pedro Muteka",
-    phone: "+27 5625 456 589",
-    email: "margearita@gmail.com",
-    country: "17",
-    status: "Apurado",
-
-    joindate: "2019/12/01",
-    color: "bg-danger",
-  },
-
-  {
-    name: "Ernesto Cabingano Salias",
-    phone: "+91 2586 253 125",
-    email: "hansolo@gmail.com",
-    country: "12",
-    status: "Rejeitado",
-    joindate: "2019/12/01",
-    color: "bg-danger",
-  },
-
-  {
-    name: "Luís Carlos Sebastião Baptista",
-    phone: "+91 2586 253 125",
-    email: "hansolo@gmail.com",
-    country: "12",
-    status: "Rejeitado",
-
-    joindate: "2019/12/01",
-    color: "bg-danger",
-  },
-
-  {
-    name: "Domingos Pascol João Matumona",
-    phone: "+27 5625 456 589",
-    email: "margearita@gmail.com",
-    country: "17",
-    status: "Rejeitado",
-
-    joindate: "2019/12/01",
-    color: "bg-danger",
-  },
-
-  {
-    name: "Mauricio Costa",
-    phone: "+27 5625 456 589",
-    email: "margearita@gmail.com",
-    country: "17",
-    status: "Rejeitado",
-
-    joindate: "2019/12/01",
-    color: "bg-danger",
-  },
-];
+import useFetch from "../../../hooks";
+import { ViewDataCandidate } from "./components";
+import { getUserInfo } from "../auth/services";
 
 const UserList = () => {
   const [query, setQuery] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [item, setItem] = useState({});
+
+  const user = getUserInfo();
+  const { data: userData } = useFetch(`/user/list/${user?.sub}`);
+  const { data: Inscricao } = useFetch(`/enrollment/list/rejected`);
+
+  function handleClose() {
+    setOpenModal(false);
+  }
+
+  function handleView(item) {
+    setItem(item);
+    setOpenModal(true);
+  }
 
   return (
     <Fragment>
+      {openModal ? (
+        <ViewDataCandidate
+          item={item}
+          handleClose={handleClose}
+          isShow={openModal}
+          mutate={handleMutate}
+        />
+      ) : null}
       <Row>
         <Col sm="12">
           <Card>
             <Card.Header className="d-flex justify-content-between">
               <div className="header-title">
-                <h4 className="card-title">Inscrições Não Aceite</h4>
+                <h4 className="card-title">Inscrições</h4>
               </div>
               <div class="form-outline">
                 <input
@@ -109,35 +68,46 @@ const UserList = () => {
                 >
                   <thead>
                     <tr className="ligth">
-                      <th>Name</th>
-                      <th>Contact</th>
+                      <th>Nome Completo</th>
+                      <th>Contacto</th>
+                      <th>Sexo</th>
                       <th>Email</th>
-                      <th>Media Final</th>
+                      <th>Curso</th>
                       <th>Status</th>
-
-                      <th>Data da Inscrição</th>
+                      <th>Acções</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {userlist
-                      .filter((user) =>
-                        user.email.toLocaleLowerCase().includes(query)
-                      )
-                      .map((item, idx) => (
-                        <tr key={idx}>
-                          <td>{item.name}</td>
-                          <td>{item.phone}</td>
-                          <td>{item.email}</td>
-                          <td>{item.country}</td>
-                          <td>
-                            <span className={`badge ${item.color}`}>
-                              {item.status}
-                            </span>
-                          </td>
+                    {!Inscricao?.length && (
+                      <div className="text-center text-blue pt-4">
+                        Sem candidatos rejeitados no momento
+                      </div>
+                    )}
+                    {Inscricao?.filter((item) =>
+                      item?.Candidato?.nomeCompleto
+                        .toLocaleLowerCase()
+                        .includes(query)
+                    ).map((item, idx) => (
+                      <tr key={idx}>
+                        <td>{item?.Candidato?.nomeCompleto}</td>
+                        <td>{item?.Candidato?.Contato?.numeroTelefone}</td>
+                        <td>{item?.Candidato?.sexo}</td>
+                        <td>{item?.Candidato?.Contato?.email}</td>
+                        <td>{item?.CursoPretendido[0]?.Curso?.nome}</td>
 
-                          <td>{item.joindate}</td>
-                        </tr>
-                      ))}
+                        <td>
+                          <span className={`badge ${"bg-success"}`}>
+                            {item?.estado}
+                          </span>
+                        </td>
+
+                        <td>
+                          <Button onClick={() => handleView(item)}>
+                            Ver dados
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

@@ -22,7 +22,6 @@ import { getUserInfo } from "../auth/services";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { api } from "../../../services";
-import { mutate } from "swr";
 
 const FuncionarioAdd = memo(() => {
   const [isProf, setProf] = useState(false);
@@ -30,14 +29,19 @@ const FuncionarioAdd = memo(() => {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const { data: userData } = useFetch(`/user/list/${user?.sub}`);
   const { data: categoria } = useFetch(`/province/list`);
+  const { data: schools } = useFetch(`/school/list`);
+
+  console.log(schools);
 
   const formik = useFormik({
     initialValues: {
-      nome: userData?.nome,
-      email: userData?.email,
+      nome: "",
+      email: "",
       senha: "",
-      fotoUrl: userData?.fotoUrl,
-      tipoUsuario: "ADMINISTRADOR_GERAL",
+      fotoUrl: "",
+      provinciaId: userData?.provinciaId,
+      escolaId: "",
+      tipoUsuario: "ADMINISTRADOR_ESCOLA",
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
@@ -58,30 +62,22 @@ const FuncionarioAdd = memo(() => {
         ),
       senha: yup.string().required("Este campo  é obrigatório"),
       email: yup.string().required("Este campo  é obrigatório"),
+      provinciaId: yup.string().required("Este campo  é obrigatório"),
+      escolaId: yup.string().required("Este campo  é obrigatório"),
       tipoUsuario: yup.string().required("Este campo  é obrigatório"),
     }),
     onSubmit: async (data) => {
       try {
         setIsSubmiting(true);
-        if (data?.fotoUrl === userData?.fotoUrl) {
-          const response = await api.put(`/user/put/${userData?.id}`, data);
+        const formData = new FormData();
+        formData.append("file", data?.fotoUrl[0]);
+        const fotoUrl = await getFile(formData);
+        if (fotoUrl) {
+          data = { ...data, fotoUrl: fotoUrl?.id };
+          const response = await api.post("/user/post", data);
           if (response) {
+            toast.success("Administrador cadastrado com sucesso");
             formik.resetForm();
-            mutate(`/user/list/${user?.sub}`);
-            toast.success("Administrador actualizado com sucesso");
-          }
-        } else {
-          const formData = new FormData();
-          formData.append("file", data?.fotoUrl[0]);
-          const fotoUrl = await getFile(formData);
-          if (fotoUrl) {
-            data = { ...data, fotoUrl: fotoUrl?.id };
-            const response = await api.post(`/user/put/${userData?.id}`, data);
-            if (response) {
-              formik.resetForm();
-              mutate(`/user/list/${user?.sub}`);
-              toast.success("Administrador actualizado com sucesso");
-            }
           }
         }
       } catch (err) {
@@ -96,7 +92,6 @@ const FuncionarioAdd = memo(() => {
 
   async function getFile(data) {
     const dataD = await api.post("/file", data);
-
     return dataD.data;
   }
 
@@ -106,7 +101,7 @@ const FuncionarioAdd = memo(() => {
         <Card>
           <Card.Header className="d-flex justify-content-between">
             <div className="header-title">
-              <h4 className="card-title">Actualizar Administrador</h4>
+              <h4 className="card-title">Cadastrar Administrador (Escola)</h4>
             </div>
           </Card.Header>
           <Card.Body>
@@ -144,13 +139,15 @@ const FuncionarioAdd = memo(() => {
                       </label>
                     ) : null}
                   </Form.Group>
-                  {/* <Form.Label htmlFor="validationCustom05">
+                  <Form.Label htmlFor="validationCustom05">
                     Provincia
                   </Form.Label>
                   <Form.Select
                     id="provinciaId"
                     name="provinciaId"
+                    value={formik.values.provinciaId}
                     required
+                    disabled={true}
                     onChange={formik.handleChange}
                   >
                     <option defaultChecked>Selecione uma provincia</option>
@@ -165,7 +162,7 @@ const FuncionarioAdd = memo(() => {
                     <label className="mt-1 text-danger">
                       {formik?.errors?.provinciaId}
                     </label>
-                  ) : null} */}
+                  ) : null}
                 </Col>
                 <Col md="6" className="mb-3">
                   <Form.Group className="mb-3 form-group mt-2">
@@ -206,11 +203,32 @@ const FuncionarioAdd = memo(() => {
                       </label>
                     ) : null}
                   </Form.Group>
+                  <Form.Label htmlFor="validationCustom05">Escola</Form.Label>
+                  <Form.Select
+                    id="escolaId"
+                    name="escolaId"
+                    value={formik.values.escolaId}
+                    required
+                    // disabled={true}
+                    onChange={formik.handleChange}
+                  >
+                    <option defaultChecked>Selecione uma escola</option>
+                    {schools?.map((item) => (
+                      <option key={item?.id} value={item?.id}>
+                        {item?.nome}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  {formik?.touched?.escolaId && formik?.errors?.escolaId ? (
+                    <label className="mt-1 text-danger">
+                      {formik?.errors?.escolaId}
+                    </label>
+                  ) : null}
                 </Col>
 
                 <div className="col-12">
                   <Button type="submit" disabled={isSubmiting}>
-                    Actualizar
+                    Cadastrar
                   </Button>
                 </div>
               </Row>

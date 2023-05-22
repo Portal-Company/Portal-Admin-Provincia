@@ -77,7 +77,7 @@ const HeaderStyle1 = memo(() => {
           <Navbar.Brand as="div" className="col-md-2 col-lg-3 ">
             <Link to="/" className="d-flex">
               <Logo color={true} />
-              <h4 className="logo-title">Qompac UI</h4>
+              {/* <h4 className="logo-title">Qompac UI</h4> */}
             </Link>
           </Navbar.Brand>
           <HorizontalNav />
