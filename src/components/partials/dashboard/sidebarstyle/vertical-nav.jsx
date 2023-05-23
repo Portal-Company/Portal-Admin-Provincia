@@ -394,7 +394,7 @@ const VerticalNav = memo(() => {
           >
             <OverlayTrigger
               placement="right"
-              overlay={<Tooltip>Users</Tooltip>}
+              overlay={<Tooltip>Perfil</Tooltip>}
             >
               <i className="icon">
                 <svg
@@ -544,7 +544,7 @@ const VerticalNav = memo(() => {
           >
             <OverlayTrigger
               placement="right"
-              overlay={<Tooltip>Plugins</Tooltip>}
+              overlay={<Tooltip>Area de Inscritos</Tooltip>}
             >
               <i className="icon">
                 <svg
@@ -713,7 +713,7 @@ const VerticalNav = memo(() => {
           >
             <OverlayTrigger
               placement="right"
-              overlay={<Tooltip>Plugins</Tooltip>}
+              overlay={<Tooltip>Area de Escola</Tooltip>}
             >
               <i className="icon">
                 <svg
@@ -841,7 +841,7 @@ const VerticalNav = memo(() => {
           >
             <OverlayTrigger
               placement="right"
-              overlay={<Tooltip>Plugins</Tooltip>}
+              overlay={<Tooltip>Area de Categoria</Tooltip>}
             >
               <i className="icon">
                 <svg
@@ -969,7 +969,7 @@ const VerticalNav = memo(() => {
           >
             <OverlayTrigger
               placement="right"
-              overlay={<Tooltip>Plugins</Tooltip>}
+              overlay={<Tooltip>Area de Administradores</Tooltip>}
             >
               <i className="icon">
                 <svg
