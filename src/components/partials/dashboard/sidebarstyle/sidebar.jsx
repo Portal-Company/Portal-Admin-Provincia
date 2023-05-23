@@ -1,4 +1,4 @@
-import { useEffect, memo, Fragment } from "react";
+import { useEffect, memo, Fragment, useState } from "react";
 import "./style.css";
 //router
 import { Link } from "react-router-dom";
@@ -20,6 +20,7 @@ const Sidebar = memo((props) => {
   const sidebarColor = useSelector(SettingSelector.sidebar_color);
   const sidebarType = useSelector(SettingSelector.sidebar_type); // array
   const sidebarMenuStyle = useSelector(SettingSelector.sidebar_menu_style);
+  const [bar, setBar] = useState(true);
 
   const minisidebar = () => {
     document.getElementsByTagName("ASIDE")[0].classList.toggle("sidebar-mini");
@@ -49,6 +50,8 @@ const Sidebar = memo((props) => {
           return elem.classList.add("flex-column", "on-resize");
         });
         if (sidebarResponsive !== null) {
+          setBar(true);
+
           if (!sidebarResponsive.classList.contains("sidebar-mini")) {
             sidebarResponsive.classList.add("sidebar-mini", "on-resize");
           }
@@ -61,6 +64,7 @@ const Sidebar = memo((props) => {
           return elem.classList.remove("flex-column", "on-resize");
         });
         if (sidebarResponsive !== null) {
+          setBar(false);
           if (
             sidebarResponsive.classList.contains("sidebar-mini") &&
             sidebarResponsive.classList.contains("on-resize")
@@ -81,7 +85,11 @@ const Sidebar = memo((props) => {
         data-sidebar="responsive"
       >
         <div className="sidebar-header d-flex align-items-center justify-content-start">
-          <img src={LogoApp} className="IMGLogo" />
+          {bar ? (
+            <img src={LogoApp} className="IMGLogo" />
+          ) : (
+            <img src={LogoApp} className="IMGLogo" style={{ width: "80px" }} />
+          )}
           <div
             className="sidebar-toggle"
             data-toggle="sidebar"
