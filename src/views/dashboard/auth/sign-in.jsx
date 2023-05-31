@@ -173,7 +173,7 @@ const SignIn = memo(() => {
                           variant="btn btn-primary"
                           disabled={isSubmiting}
                         >
-                          Sign In
+                          Entrar
                         </Button>
                       </div>
                       {/* <p className="text-center my-3">

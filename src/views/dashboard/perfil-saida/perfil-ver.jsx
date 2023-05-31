@@ -36,8 +36,9 @@ const FuncionarioAdd = memo(() => {
       nome: userData?.nome,
       email: userData?.email,
       senha: "",
+      senhaNova: "",
       fotoUrl: userData?.fotoUrl,
-      tipoUsuario: "ADMINISTRADOR_GERAL",
+      tipoUsuario: "ADMINISTRADOR_PROVINCIAL",
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
@@ -47,7 +48,7 @@ const FuncionarioAdd = memo(() => {
           "isImage",
           "Por favor selecione um arquivo de imagem válido!",
           (value) => {
-            if (!value) return true; // permite que o campo seja vazio
+            if (value) return true; // permite que o campo seja vazio
             return (
               value &&
               ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
@@ -56,7 +57,6 @@ const FuncionarioAdd = memo(() => {
             );
           }
         ),
-      senha: yup.string().required("Este campo  é obrigatório"),
       email: yup.string().required("Este campo  é obrigatório"),
       tipoUsuario: yup.string().required("Este campo  é obrigatório"),
     }),
@@ -203,6 +203,23 @@ const FuncionarioAdd = memo(() => {
                     {formik?.touched?.senha && formik?.errors?.senha ? (
                       <label className="mt-1 text-danger">
                         {formik?.errors?.senha}
+                      </label>
+                    ) : null}
+                  </Form.Group>
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label htmlFor="exampleFormControlTextarea1">
+                      Confirmar Senha
+                    </Form.Label>
+                    <Form.Control
+                      type="password"
+                      id="senhaNova"
+                      value={formik.values.senhaNova}
+                      name="senhaNova"
+                      onChange={formik.handleChange}
+                    />
+                    {formik?.touched?.senhaNova && formik?.errors?.senhaNova ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.senhaNova}
                       </label>
                     ) : null}
                   </Form.Group>
