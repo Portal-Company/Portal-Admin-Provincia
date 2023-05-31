@@ -678,11 +678,11 @@ const SunNav = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu variant="end">
               <Dropdown.Item to="/dashboard/app/user-profile">
-                Perfil
+                <Link to={"/perfil-saida/perfil-ver"}>Perfil</Link>
               </Dropdown.Item>
-              <Dropdown.Item to="/dashboard/app/user-privacy-setting">
+              {/* <Dropdown.Item to="/dashboard/app/user-privacy-setting">
                 Configurações
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <hr className="dropdown-divider" />
               <Dropdown.Item onClick={() => logout()}>
                 <Link to="/auth/sign-in">Sair</Link>
