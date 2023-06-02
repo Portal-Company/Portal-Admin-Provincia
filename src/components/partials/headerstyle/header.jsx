@@ -256,7 +256,7 @@ const Header = memo((props) => {
                     </svg>
                     <span className="nav-text ms-2">Home</span>
                   </Nav.Link>
-                  <Collapse in={open12}>
+                  {/* <Collapse in={open12}>
                     <ul
                       className="iq-header-sub-menu list-unstyled "
                       id="elementsData"
@@ -920,7 +920,7 @@ const Header = memo((props) => {
                         </Collapse>
                       </Nav.Item>
                     </ul>
-                  </Collapse>
+                  </Collapse> */}
                 </Nav.Item>
               </ul>
             </div>
