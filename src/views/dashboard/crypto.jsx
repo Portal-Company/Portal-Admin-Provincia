@@ -49,6 +49,11 @@ const Crypto = memo((props) => {
   const { data: statistc } = useFetch(
     `/statistic/province/${data?.provinciaId}`
   );
+
+  const [view, setView] = useState("");
+  const [view2, setView2] = useState("");
+  const [view3, setView3] = useState("");
+
   console.log(userData);
   console.log(statistc, "estatistica");
 
@@ -131,7 +136,7 @@ const Crypto = memo((props) => {
     },
     series: [
       {
-        name: "Bitcoin",
+        name: "Inscritos",
         data: [10, 21, 15, 31, 29, 42, 39, 61, 41, 51, 32, 51, 51, 55, 60],
       },
     ],
@@ -177,7 +182,7 @@ const Crypto = memo((props) => {
     },
     series: [
       {
-        name: "Bitcoin",
+        name: "Inscritos",
         data: [10, 21, 15, 31, 29, 42, 39, 61, 41, 51, 32, 51, 51, 55, 60],
       },
     ],
@@ -222,7 +227,7 @@ const Crypto = memo((props) => {
     },
     series: [
       {
-        name: "Bitcoin",
+        name: "Inscritos",
         data: [10, 21, 15, 31, 29, 42, 39, 61, 41, 51, 32, 51, 51, 55, 60],
       },
     ],
@@ -641,14 +646,20 @@ const Crypto = memo((props) => {
                     </svg>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item to="#">Mascolino</Dropdown.Item>
-                    <Dropdown.Item to="#">Femenino</Dropdown.Item>
+                    <Dropdown.Item to="#" onClick={() => setView("M")}>
+                      Masculino
+                    </Dropdown.Item>
+                    <Dropdown.Item to="#" onClick={() => setView("F")}>
+                      Femenino
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
               <div className="d-flex align-items-center">
                 <div>
-                  <h3>{statistc?.totalInscritos}</h3>
+                  {!view && <h3>{statistc?.totalInscritos}</h3>}
+                  {view === "M" && <h3>{statistc?.totalRapazesInscritos}</h3>}
+                  {view === "F" && <h3>{statistc?.totalMeninasInscritas}</h3>}
                   <small className="text-success">+ 0.1%</small>
                   <small className="ms-2">Candidatos</small>
                 </div>
@@ -671,7 +682,7 @@ const Crypto = memo((props) => {
                     Total de Alunos Rejeitados ({data?.Provincia?.nome})
                   </h6>
                 </div>
-                <Dropdown>
+                {/* <Dropdown>
                   <Dropdown.Toggle
                     as={CustomToggle}
                     to="#"
@@ -695,14 +706,24 @@ const Crypto = memo((props) => {
                     </svg>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item to="#">Mascolino</Dropdown.Item>
-                    <Dropdown.Item to="#">Femenino</Dropdown.Item>
+                    <Dropdown.Item to="#" onClick={() => setView2("M")}>
+                      Masculino
+                    </Dropdown.Item>
+                    <Dropdown.Item to="#" onClick={() => setView2("F")}>
+                      Femenino
+                    </Dropdown.Item>
                   </Dropdown.Menu>
-                </Dropdown>
+                </Dropdown> */}
               </div>
               <div className="d-flex align-items-center">
                 <div>
-                  <h3>{statistc?.totalInscritosRejeitados}</h3>
+                  {!view && <h3>{statistc?.totalInscritosRejeitados}</h3>}
+                  {view === "F" && (
+                    <h3>{statistc?.totalInscritosRejeitados}</h3>
+                  )}
+                  {view === "M" && (
+                    <h3>{statistc?.totalInscritosRejeitados}</h3>
+                  )}
                   <small className="text-success">+ 0.8%</small>
                   <small className="ms-2">Alunos</small>
                 </div>
@@ -731,18 +752,42 @@ const Crypto = memo((props) => {
                     to="#"
                     variant="text-gray"
                     size="sm"
-                    id="dropdownMenuButton39"
-                  ></Dropdown.Toggle>
+                    id="dropdownMenuButton38"
+                  >
+                    <svg
+                      width="22"
+                      height="5"
+                      viewBox="0 0 22 5"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M19.6788 5C20.9595 5 22 3.96222 22 2.68866C22 1.41318 20.9595 0.373465 19.6788 0.373465C18.3981 0.373465 17.3576 1.41318 17.3576 2.68866C17.3576 3.96222 18.3981 5 19.6788 5ZM11.0005 5C12.2812 5 13.3217 3.96222 13.3217 2.68866C13.3217 1.41318 12.2812 0.373465 11.0005 0.373465C9.71976 0.373465 8.67929 1.41318 8.67929 2.68866C8.67929 3.96222 9.71976 5 11.0005 5ZM4.64239 2.68866C4.64239 3.96222 3.60192 5 2.3212 5C1.04047 5 0 3.96222 0 2.68866C0 1.41318 1.04047 0.373465 2.3212 0.373465C3.60192 0.373465 4.64239 1.41318 4.64239 2.68866Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item to="#">Year</Dropdown.Item>
-                    <Dropdown.Item to="#">Month</Dropdown.Item>
-                    <Dropdown.Item to="#">Week</Dropdown.Item>
+                    <Dropdown.Item to="#" onClick={() => setView2("M")}>
+                      Masculino
+                    </Dropdown.Item>
+                    <Dropdown.Item to="#" onClick={() => setView2("F")}>
+                      Femenino
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
               <div className="d-flex align-items-center">
                 <div>
-                  <h3>{statistc?.totalInscritosAceites}</h3>
+                  {!view2 && <h3>{statistc?.totalInscritosAceites}</h3>}
+                  {view2 === "F" && (
+                    <h3>{statistc?.totalMeninasIncritasAceites}</h3>
+                  )}
+                  {view2 === "M" && (
+                    <h3>{statistc?.totalRapazesIncritosAceites}</h3>
+                  )}
                   <small className="text-danger">- 0.8%</small>
                   <small className="ms-2">Alunos</small>
                 </div>
