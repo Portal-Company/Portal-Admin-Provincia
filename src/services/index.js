@@ -1,14 +1,8 @@
-import axios from "axios"
-import nookies from "nookies"
+import { createApiClient } from './axios';
+import nookies from 'nookies';
 
+const token = nookies.get(null).token; // Obtenha o token do local 
 
-export const api = axios.create(
-    {
-        // baseURL: "https://portal-das-escolas-api.onrender.com",
-        baseURL: "http://localhost:4444",
-        Headers: {
-            "content-Type": "application/json",
-            Authorization: `Bearer ${nookies.get(null).token}`,
-        }
-    }
-)
+console.log(token);
+
+export const api = createApiClient(token);

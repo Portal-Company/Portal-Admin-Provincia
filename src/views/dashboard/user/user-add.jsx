@@ -29,7 +29,11 @@ const FuncionarioAdd = memo(() => {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const { data: userData } = useFetch(`/user/list/${user?.sub}`);
   const { data: categoria } = useFetch(`/province/list`);
-  const { data: schools } = useFetch(`/school/list`);
+  const { data } = useFetch(`/school/list`);
+
+  const schools = data?.filter(
+    (item) => item?.Localizacao?.provinciaId === userData?.provinciaId
+  );
 
   console.log(schools);
 
@@ -51,7 +55,7 @@ const FuncionarioAdd = memo(() => {
           "isImage",
           "Por favor selecione um arquivo de imagem válido!",
           (value) => {
-            if (!value) return true; // permite que o campo seja vazio
+            if (value) return true; // permite que o campo seja vazio
             return (
               value &&
               ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
@@ -172,6 +176,7 @@ const FuncionarioAdd = memo(() => {
                     <Form.Control
                       type="file"
                       id="fotoUrl"
+                      accept="image/png, image/jpg, image/jpeg, image/gif"
                       name="fotoUrl"
                       onChange={(event) => {
                         formik.setFieldValue(

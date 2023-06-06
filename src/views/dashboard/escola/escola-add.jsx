@@ -36,8 +36,9 @@ const FuncionarioAdd = memo(() => {
       nif: "",
       fotoUrl: "",
       logo: "",
+      endereco1: "",
       categoriaId: "",
-      provinciaId: userData?.Provincia?.id,
+      provinciaId: userData?.provinciaId,
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
@@ -47,7 +48,7 @@ const FuncionarioAdd = memo(() => {
           "isImage",
           "Por favor selecione um arquivo de imagem válido!",
           (value) => {
-            if (!value) return true; // permite que o campo seja vazio
+            if (value) return true; // permite que o campo seja vazio
             return (
               value &&
               ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
@@ -62,7 +63,7 @@ const FuncionarioAdd = memo(() => {
           "isImage",
           "Por favor selecione um arquivo de imagem válido!",
           (value) => {
-            if (!value) return true; // permite que o campo seja vazio
+            if (value) return true; // permite que o campo seja vazio
             return (
               value &&
               ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
@@ -85,10 +86,18 @@ const FuncionarioAdd = memo(() => {
         const fotoUrl = await getFile(formData);
         if (fotoUrl) {
           data = { ...data, fotoUrl: fotoUrl?.id, logo: logo?.id };
-          const response = await api.post("/school/post", data);
-          if (response) {
-            toast.success("Escola cadastrada com sucesso");
-            formik.resetForm();
+          const res = (await api.post("/school/post", data)).data;
+          console.log(res);
+          if (res) {
+            const response = await api.post("/location/post", {
+              escolaId: res?.id,
+              endereco1: data?.endereco1,
+              provinciaId: data?.provinciaId,
+            });
+            if (response) {
+              toast.success("Escola cadastrada com sucesso");
+              formik.resetForm();
+            }
           }
         }
       } catch (err) {
@@ -176,6 +185,23 @@ const FuncionarioAdd = memo(() => {
                       </label>
                     ) : null}
                   </Form.Group>
+                  <Form.Group className="mb-3 form-group mt-2">
+                    <Form.Label htmlFor="exampleFormControlTextarea1">
+                      Endereco
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      id="endereco1"
+                      value={formik.values.endereco1}
+                      name="endereco1"
+                      onChange={formik.handleChange}
+                    />
+                    {formik?.touched?.endereco1 && formik?.errors?.endereco1 ? (
+                      <label className="mt-1 text-danger">
+                        {formik?.errors?.endereco1}
+                      </label>
+                    ) : null}
+                  </Form.Group>
                 </Col>
                 <Col md="6" className="mb-3">
                   <Form.Group className="mb-3 form-group mt-2">
@@ -185,6 +211,7 @@ const FuncionarioAdd = memo(() => {
                     <Form.Control
                       type="file"
                       id="fotoUrl"
+                      accept="image/png, image/jpg, image/jpeg, image/gif"
                       name="fotoUrl"
                       onChange={(event) => {
                         formik.setFieldValue(
@@ -206,6 +233,7 @@ const FuncionarioAdd = memo(() => {
                     <Form.Control
                       type="file"
                       id="logo"
+                      accept="image/png, image/jpg, image/jpeg, image/gif"
                       name="logo"
                       onChange={(event) => {
                         formik.setFieldValue(
