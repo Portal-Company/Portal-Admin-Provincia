@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 import { api } from '../services';
 
-function useFetch(url) {
+function useFetch(url, token) {
     const { data, error } = useSWR(url, async url => {
         const response = await api.get(url);
         const data = response.data;

@@ -2,6 +2,7 @@ import { memo, Fragment, useState } from "react";
 
 // React-bootstrap
 import { Row, Col, Image, Button, Table } from "react-bootstrap";
+import nookies from "nookies";
 
 //Components
 import Card from "../../../components/bootstrap/card";
@@ -29,6 +30,8 @@ const FuncionarioList = memo(() => {
         (item) => item?.Localizacao?.Provincia?.id === userData?.provinciaId
       )
     : [];
+
+  console.log(nookies.get(null).token);
 
   function handleView(item) {
     setIsModal(true);
