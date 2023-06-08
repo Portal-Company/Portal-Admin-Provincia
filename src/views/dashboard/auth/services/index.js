@@ -3,7 +3,7 @@ import jwt_decode from 'jwt-decode';
 import nookies, { destroyCookie } from 'nookies';
 
 export const logout = () => {
-    destroyCookie(null, 'token', { path: '/' });
+    destroyCookie(null, 'token_provincia', { path: '/' });
 };
 
 export const isAuthenticated = () => {
@@ -14,7 +14,7 @@ export const isAuthenticated = () => {
 
 export const getUserInfo = () => {
     const cookies = nookies.get();
-    const token = cookies.token;
+    const token = cookies.token_provincia;
     if (token) {
         return jwt_decode(token);
     }

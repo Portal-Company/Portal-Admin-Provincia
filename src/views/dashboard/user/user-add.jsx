@@ -49,21 +49,7 @@ const FuncionarioAdd = memo(() => {
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
-      fotoUrl: yup
-        .mixed()
-        .test(
-          "isImage",
-          "Por favor selecione um arquivo de imagem válido!",
-          (value) => {
-            if (value) return true; // permite que o campo seja vazio
-            return (
-              value &&
-              ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
-                value.type
-              )
-            );
-          }
-        ),
+      fotoUrl: yup.string().required("Este campo é obrigatório"),
       senha: yup.string().required("Este campo  é obrigatório"),
       email: yup.string().required("Este campo  é obrigatório"),
       provinciaId: yup.string().required("Este campo  é obrigatório"),

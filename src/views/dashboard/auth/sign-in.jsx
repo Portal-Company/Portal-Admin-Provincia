@@ -52,7 +52,7 @@ const SignIn = memo(() => {
         setIsSubmiting(true);
         const response = await api.post("/auth/login", data);
         const { token, user } = response.data;
-        setCookie(null, "token", token, { path: "/" });
+        setCookie(null, "token_provincia", token, { path: "/" });
         if (response.data && user?.tipoUsuario === "ADMINISTRADOR_PROVINCIAL") {
           history("/");
         } else {
@@ -151,7 +151,7 @@ const SignIn = memo(() => {
                             ) : null}
                           </Form.Group>
                         </Col>
-                        {/* <Col lg="12" className="d-flex justify-content-between">
+                        <Col lg="12" className="d-flex justify-content-between">
                           <Form.Check className="form-check mb-3">
                             <Form.Check.Input
                               type="checkbox"
@@ -164,7 +164,7 @@ const SignIn = memo(() => {
                           <Link to="/auth/recoverpw">
                             Esqueceu a sua senha?
                           </Link>
-                        </Col> */}
+                        </Col>
                       </Row>
                       <div className="d-flex justify-content-center">
                         <Button

@@ -1,7 +1,7 @@
 import nookies from 'nookies';
 
 export const setCookie = (token) => {
-    nookies.set(undefined, 'token', token, {
+    nookies.set(undefined, 'token_provincia', token, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
         secure: true,
