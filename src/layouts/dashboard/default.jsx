@@ -141,8 +141,8 @@ const Default = memo((props) => {
     case "/special-pages/pricing":
     case "/special-pages/timeline":
     case "/app/user-profile":
-    case "/app/user-add":
-    case "/app/user-list":
+    case "/category/category/add":
+    case "/category/category/list":
     case "/table/table-data":
     case "/table/bootstrap-table":
     case "/table/border-table":

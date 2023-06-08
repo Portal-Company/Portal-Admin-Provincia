@@ -53,6 +53,7 @@ import { PublicRoute } from "./pulicRoute";
 
 // auth
 const ConfirmMail = lazy(() => import("../views/dashboard/auth/confirm-mail"));
+
 const LockScreen = lazy(() => import("../views/dashboard/auth/lock-screen"));
 const Recoverpw = lazy(() => import("../views/dashboard/auth/recoverpw"));
 const SignIn = lazy(() => import("../views/dashboard/auth/sign-in"));
@@ -67,9 +68,13 @@ const Index = lazy(() => import("../views/dashboard/index"));
 
 // User
 // const UserProfile = lazy(() => import("../views/dashboard/app/user-profile"));
-const UserAdd = lazy(() => import("../views/dashboard/app/categoria-add"));
+const CategoryAdd = lazy(() =>
+  import("../views/dashboard/category/categoria-add")
+);
 
-const UserList = lazy(() => import("../views/dashboard/app/categoria-list"));
+const CategoryList = lazy(() =>
+  import("../views/dashboard/category/categoria-list")
+);
 // const userProfileEdit = lazy(() => import('../views/dashboard/app/user-privacy-setting'))
 
 // widget
@@ -194,6 +199,9 @@ const Imagecopper = lazy(() =>
 const Quilleditor = lazy(() =>
   import("../views/dashboard/plugins/quill-editor")
 );
+const ResetPassword = lazy(() =>
+  import("../views/dashboard/auth/resetPassword/[token]")
+);
 
 //admin
 const Admin = lazy(() => import("../views/dashboard/admin/admin"));
@@ -221,8 +229,9 @@ const IndexRouters = memo(() => {
       >
         <Route path="confirm-mail" element={<ConfirmMail />} />
         <Route path="lock-screen" element={<LockScreen />} />
+        <Route path="resetPassword/:token" element={<ResetPassword />} />
         <Route path="recoverpw" element={<Recoverpw />} />
-        <Route path="sign-in" element={<SignIn />} />
+        <Route path="sign-up" element={<SignIn />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="account-deactivate" element={<AccountDeactive />} />
         <Route path="two-factor" element={<TwoFactor />} />
@@ -275,8 +284,8 @@ const IndexRouters = memo(() => {
         {/* user */}
         {/* <Route path="/app/user-profile" element={<UserProfile />} /> */}
 
-        <Route path="/app/user-add" element={<UserAdd />} />
-        <Route path="/app/user-list" element={<UserList />} />
+        <Route path="/category/category/add" element={<CategoryAdd />} />
+        <Route path="/category/category/list" element={<CategoryList />} />
         <Route path="/app/user-privacy-setting" element={<userProfileEdit />} />
 
         {/* widget */}
