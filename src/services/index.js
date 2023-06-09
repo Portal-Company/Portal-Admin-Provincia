@@ -3,6 +3,5 @@ import nookies from 'nookies';
 
 const token = nookies.get(null).token_provincia; // Obtenha o token do local 
 
-console.log(token);
 
 export const api = createApiClient(token);
