@@ -4,7 +4,7 @@ import { getUserInfo } from "../views/dashboard/auth/services";
 export function PublicRoute({ children }) {
   const user = getUserInfo();
 
-  if (user) {
+  if (user?.sub) {
     return <Navigate to={"/"} replace />;
   }
 
