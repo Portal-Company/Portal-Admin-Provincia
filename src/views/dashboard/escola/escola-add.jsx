@@ -34,23 +34,23 @@ const FuncionarioAdd = memo(() => {
     initialValues: {
       nome: "",
       nif: "",
-      fotoUrl: "",
-      logo: "",
+      // fotoUrl: "",
+      // logo: "",
       endereco1: "",
       categoriaId: "",
       provinciaId: userData?.provinciaId,
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
-      fotoUrl: yup.string().required("Este campo é obrigatório"),
-      logo: yup.string().required("Este campo é obrigatório"),
+      // fotoUrl: yup.string().required("Este campo é obrigatório"),
+      // logo: yup.string().required("Este campo é obrigatório"),
       nif: yup.string().required("Este campo é obrigatório"),
       categoriaId: yup.string().required("Este campo é obrigatório"),
     }),
     onSubmit: async (data) => {
       try {
         setIsSubmiting(true);
-        const formData = new FormData();
+       /*  const formData = new FormData();
         const formData1 = new FormData();
         formData1.append("file", data?.logo[0]);
         formData.append("file", data?.fotoUrl[0]);
@@ -58,7 +58,7 @@ const FuncionarioAdd = memo(() => {
         const fotoUrl = await getFile(formData);
         if (fotoUrl) {
           data = { ...data, fotoUrl: fotoUrl?.id, logo: logo?.id };
-          const res = (await api.post("/school/post", data)).data;
+        */   const res = (await api.post("/school/post", data)).data;
           console.log(res);
           if (res) {
             const response = await api.post("/location/post", {
@@ -71,7 +71,7 @@ const FuncionarioAdd = memo(() => {
               formik.resetForm();
             }
           }
-        }
+        // }
       } catch (err) {
         toast.error(err?.response?.data?.message);
       } finally {

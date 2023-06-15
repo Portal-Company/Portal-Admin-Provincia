@@ -231,7 +231,7 @@ const IndexRouters = memo(() => {
         <Route path="lock-screen" element={<LockScreen />} />
         <Route path="resetPassword/:token" element={<ResetPassword />} />
         <Route path="recoverpw" element={<Recoverpw />} />
-        <Route path="sign-up" element={<SignIn />} />
+        <Route path="sign-in" element={<SignIn />} />
         <Route path="sign-up" element={<SignUp />} />
         <Route path="account-deactivate" element={<AccountDeactive />} />
         <Route path="two-factor" element={<TwoFactor />} />
