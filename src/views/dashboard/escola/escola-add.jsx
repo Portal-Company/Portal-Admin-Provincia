@@ -58,8 +58,10 @@ const FuncionarioAdd = memo(() => {
         const fotoUrl = await getFile(formData);
         if (fotoUrl) {
           data = { ...data, fotoUrl: fotoUrl?.id, logo: logo?.id };
+ 
         */   const res = (await api.post("/school/post", data)).data;
           console.log(res);
+ 
           if (res) {
             const response = await api.post("/location/post", {
               escolaId: res?.id,

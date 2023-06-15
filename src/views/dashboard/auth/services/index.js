@@ -14,7 +14,7 @@ export const isAuthenticated = () => {
 
 export const getUserInfo = () => {
     const cookies = nookies.get();
-    const token = cookies.token_provincia;
+    const token = cookies?.token_provincia;
     if (token) {
         return jwt_decode(token);
     }
