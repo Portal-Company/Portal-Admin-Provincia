@@ -42,14 +42,14 @@ const FuncionarioAdd = memo(() => {
       nome: "",
       email: "",
       senha: "",
-      fotoUrl: "",
+      // fotoUrl: "",s
       provinciaId: userData?.provinciaId,
       escolaId: "",
       tipoUsuario: "ADMINISTRADOR_ESCOLA",
     },
     validationSchema: yup.object({
       nome: yup.string().required("Este campo é obrigatório"),
-      fotoUrl: yup.string().required("Este campo é obrigatório"),
+      // fotoUrl: yup.string().required("Este campo é obrigatório"),
       senha: yup.string().required("Este campo  é obrigatório"),
       email: yup.string().required("Este campo  é obrigatório"),
       provinciaId: yup.string().required("Este campo  é obrigatório"),
@@ -59,17 +59,16 @@ const FuncionarioAdd = memo(() => {
     onSubmit: async (data) => {
       try {
         setIsSubmiting(true);
-        const formData = new FormData();
-        formData.append("file", data?.fotoUrl[0]);
-        const fotoUrl = await getFile(formData);
-        if (fotoUrl) {
-          data = { ...data, fotoUrl: fotoUrl?.id };
+        // const formData = new FormData();
+        // formData.append("file", data?.fotoUrl[0]);
+        // const fotoUrl = await getFile(formData);
+        // if (fotoUrl) {
           const response = await api.post("/user/post", data);
           if (response) {
             toast.success("Administrador cadastrado com sucesso");
             formik.resetForm();
           }
-        }
+        // }
       } catch (err) {
         toast.error(err?.response?.data?.message);
       } finally {
